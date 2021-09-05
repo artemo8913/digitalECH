@@ -1,4 +1,13 @@
-.st1{
-    background-color: bisque;
-    
+body{
+    background-color: #CBC9CC;
+    color: black;
+    font: 14px Tahoma, sans-serif;
+    border-top: 5px solid black ;
+}
+input[type="text"]{
+    background-color: #575558;
+}
+
+button{
+    background-color: #454247;
 }
