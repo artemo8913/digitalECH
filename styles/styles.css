@@ -1,7 +1,16 @@
+.logo{
+    width: 200px;
+    height: auto;
+    float: left;
+}
+@font-face {
+    font-family: "Aleo";
+    src: url("../assets/fonts/aleo-regular.otf") format("opentype");
+}
 body{
     background-color: #CBC9CC;
     color: black;
-    font: 14px Tahoma, sans-serif;
+    font: 14px "Aleo";
     border-top: 5px solid black ;
 }
 input[type="text"]{
@@ -9,5 +18,8 @@ input[type="text"]{
 }
 
 button{
-    background-color: #454247;
+    background-color: #686868;
+    width: 5cm;
+    height: 5cm;
+    font: 100px Tahoma sans-serif;
 }
