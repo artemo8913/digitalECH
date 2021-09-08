@@ -10,7 +10,7 @@
 body{
     background-color: #CBC9CC;
     color: black;
-    font: 14px "Aleo";
+    font: 24px "Aleo";
     border-top: 5px solid black ;
 }
 input[type="text"]{
