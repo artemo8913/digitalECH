@@ -13,3 +13,8 @@
   integrity sha512-c5JO2AnHafLfQvGPggBIIHrmYTkIYlathYHQP72jhUtbzko3DrXCnudRN7y6+/WbHdjOQvuxUslGhshIO0V1WA==
   dependencies:
     "@types/node" "*"
+
+papaparse@5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-5.2.0.tgz#97976a1b135c46612773029153dc64995caa3b7b"
+  integrity sha512-ylq1wgUSnagU+MKQtNeVqrPhZuMYBvOSL00DHycFTCxownF95gpLAk1HiHdUW77N8yxRq1qHXLdlIPyBSG9NSA==

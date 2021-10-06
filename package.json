@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@types/papaparse": "5.2.0"
+    "@types/papaparse": "5.2.0",
+    "papaparse": "5.2.0"
   }
 }
