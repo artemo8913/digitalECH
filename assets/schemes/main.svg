@@ -2,8 +2,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Создано Microsoft Visio, экспорт SVG Для проекта.svg Схема 2014 -->
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
-		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="116.508in" height="28.717in"
-		viewBox="0 0 8388.55 2067.62" xml:space="preserve" color-interpolation-filters="sRGB" class="st92">
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="4000" height="1000"
+	viewBox="0 0 8388.55 2067.62" xml:space="preserve" color-interpolation-filters="sRGB" class="st92">
 	<v:documentProperties v:langID="1049" v:metric="true" v:viewMarkup="false">
 		<v:userDefs>
 			<v:ud v:nameU="visAecIsTechnical" v:val="VT0(0):26"/>
@@ -14,49 +14,49 @@
 
 	<style type="text/css">
 	<![CDATA[
-		.st1 {stroke:#00b050;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st2 {stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st1 {stroke:#00b050;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st2 {stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st3 {fill:#000000;font-family:Arial Narrow;font-size:1.00001em;font-style:italic}
 		.st4 {stroke:#00b050;stroke-linecap:round;stroke-linejoin:round;stroke-width:3.12}
 		.st5 {fill:#000000;font-family:Arial Narrow;font-size:1.00001em;font-style:italic;font-weight:bold}
-		.st6 {stroke:#00b0f0;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st7 {stroke:#7030a0;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st6 {stroke:#00b0f0;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st7 {stroke:#7030a0;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st8 {fill:#800080;font-family:Arial Narrow;font-size:0.666664em;font-style:italic}
-		.st9 {stroke:#ff0000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st10 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st9 {stroke:#ff0000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st10 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st11 {stroke:#ff0000;stroke-linecap:round;stroke-linejoin:round;stroke-width:3.12}
-		.st12 {stroke:#d9680d;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st12 {stroke:#d9680d;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st13 {fill:#ffffff;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.72}
 		.st14 {fill:#ffffff;stroke:#000000;stroke-dasharray:0.72,1.44;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.72}
-		.st15 {stroke:#800080;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st16 {fill:#ffffff;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st17 {stroke:#008000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st18 {marker-end:url(#mrkr10-228);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st15 {stroke:#800080;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st16 {fill:#ffffff;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st17 {stroke:#008000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st18 {marker-end:url(#mrkr10-228);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st19 {fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:0.46153846153846}
-		.st20 {fill:#000000;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st21 {fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st20 {fill:#000000;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st21 {fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st22 {fill:#ffffff;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2}
 		.st23 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2}
 		.st24 {marker-end:url(#mrkr1-282);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.72}
 		.st25 {fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:0.22222222222222}
 		.st26 {marker-start:url(#mrkr1-288);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.72}
 		.st27 {fill:#000000;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.72}
-		.st28 {stroke:#0000ff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st28 {stroke:#0000ff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st29 {fill:#000000;font-family:Arial Narrow;font-size:0.833336em;font-style:italic;font-weight:bold}
-		.st30 {fill:#ffffff;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st30 {fill:#ffffff;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st31 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:3.12}
 		.st32 {fill:#800000;font-family:Arial Narrow;font-size:1.00001em;font-style:italic;font-weight:bold}
-		.st33 {marker-end:url(#mrkr13-584);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st33 {marker-end:url(#mrkr13-584);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st34 {fill:#ffffff;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2}
 		.st35 {fill:#000000;font-family:Arial Narrow;font-size:1.16666em;font-style:italic;font-weight:bold}
 		.st36 {fill:#000080;font-family:Arial Narrow;font-size:0.666664em;font-style:italic;font-weight:bold}
 		.st37 {fill:#000000;font-family:Arial Narrow;font-size:0.833336em;font-style:italic}
 		.st38 {font-size:1em}
-		.st39 {stroke:#000000;stroke-dasharray:15.12,10.8;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st39 {stroke:#000000;stroke-dasharray:15.12,10.8;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st40 {fill:#ffffff;stroke:none;stroke-linecap:butt;stroke-width:7.2}
-		.st41 {stroke:#000000;stroke-dasharray:15.12,10.8,0,10.8;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st42 {stroke:#000000;stroke-dasharray:41.04,10.8,15.12,10.8;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st43 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st41 {stroke:#000000;stroke-dasharray:15.12,10.8,0,10.8;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st42 {stroke:#000000;stroke-dasharray:41.04,10.8,15.12,10.8;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st43 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st44 {fill:#000000;font-family:Arial Narrow;font-size:0.666664em;font-style:italic;font-weight:bold}
 		.st45 {fill:#000000;font-family:Arial Narrow;font-size:0.499992em;font-style:italic;font-weight:bold;opacity:0.898039}
 		.st46 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.72}
@@ -67,28 +67,28 @@
 		.st51 {fill:#000080;font-family:Arial Narrow;font-size:0.666664em;font-style:italic}
 		.st52 {fill:#000000;font-family:Arial Narrow;font-size:0.666664em;font-style:italic}
 		.st53 {stroke:#000000;stroke-dasharray:8.4,6;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2}
-		.st54 {marker-start:url(#mrkr13-3784);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st55 {marker-start:url(#mrkr13-3808);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st54 {marker-start:url(#mrkr13-3784);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st55 {marker-start:url(#mrkr13-3808);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st56 {fill:#000000;font-family:Arial Narrow;font-size:0.666664em;font-weight:bold}
-		.st57 {marker-end:url(#mrkr5-4145);stroke:#ff0000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st57 {marker-end:url(#mrkr5-4145);stroke:#ff0000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st58 {fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-opacity:1;stroke-width:0.46153846153846}
 		.st59 {fill:#000000;font-family:Arial Narrow;font-size:0.916672em;font-style:italic}
-		.st60 {stroke:#000000;stroke-dasharray:15.12,10.8,0,10.8,0,10.8;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st61 {stroke:#993300;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st62 {stroke:#ffff00;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st63 {stroke:#0070c0;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st64 {fill:#000000;stroke:#800080;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st60 {stroke:#000000;stroke-dasharray:15.12,10.8,0,10.8,0,10.8;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st61 {stroke:#993300;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st62 {stroke:#ffff00;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st63 {stroke:#0070c0;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st64 {fill:#000000;stroke:#800080;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st65 {fill:#000000;font-family:Arial Narrow;font-size:0.499992em;font-style:italic}
-		.st66 {stroke:#800000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st67 {fill:#ffffff;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
-		.st68 {stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st66 {stroke:#800000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st67 {fill:#ffffff;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
+		.st68 {stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st69 {fill:#ff0000;font-family:Arial Narrow;font-size:0.833336em;font-style:italic}
-		.st70 {fill:#ff0000;stroke:#ff0000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st70 {fill:#ff0000;stroke:#ff0000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st71 {fill:#0000ff;font-family:Arial Narrow;font-size:0.833336em;font-style:italic}
 		.st72 {fill:#0000ff;font-family:Arial Narrow;font-size:0.666664em;font-style:italic}
 		.st73 {fill:#000000;font-family:Arial Narrow;font-size:0.583328em;font-style:italic}
 		.st74 {fill:#ff0000;font-family:Arial Narrow;font-size:0.833336em;font-style:italic;font-weight:bold}
-		.st75 {stroke:#006600;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st75 {stroke:#006600;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.72}
 		.st76 {fill:#000000;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
 		.st77 {marker-end:url(#mrkr1-8635);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2}
 		.st78 {fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:0.32258064516129}
@@ -266,6 +266,7 @@
 				<path d="M0 2067.62 L25.46 2067.62" class="st6"/>
 			</g>
 		</g>
+		<a href= "Опа!ы" title = "Козулька 5 путь">
 		<g id="group194711-56" transform="translate(1944.82,-1621.4)" v:mID="194711" v:groupContext="group" v:layerMember="0">
 			<title>st_Kozulka5</title>
 			<g id="group194710-57" v:mID="194710" v:groupContext="group" v:layerMember="0">
@@ -320,9 +321,11 @@
 				<title>Лист.131866</title>
 				<path d="M0 2067.62 L18.45 2067.62" class="st7"/>
 			</g>
-		</g>
+		</g></a>
+
+		
 		<g id="group194708-87" transform="translate(1900.86,-1607.58)" v:mID="194708" v:groupContext="group" v:layerMember="0">
-			<title>st_Kozulka3</title>
+			<title class="title">st_Kozulka3</title>
 			<g id="shape131529-88" v:mID="131529" v:groupContext="shape" v:layerMember="0" transform="translate(212.857,0)">
 				<title>Лист.131529</title>
 				<desc>3</desc>

@@ -1,33 +1,36 @@
 const btnParseCsv = document.getElementById("btnParseCsv");
 btnParseCsv.onclick = parseCsv;
 let jsonFile;
-
+/**Преобразует csv файл в JSON*/
 function parseCsv() {
     const csvFile = document.getElementById("csvFile").files[0];
     Papa.parse(csvFile, {
         complete: function (results) {
             console.log(results);
             jsonFile = results.data;
-            createTable();
+            create2DTable(jsonFile);
         }
     })
 }
-function createTable() {
+/**Создает таблицу на основе двухмерного массива
+ * @param matrix2D - двухмерный массив
+*/
+function create2DTable(matrix2D) {
     const table = document.createElement("table");
     const tHead = document.createElement("thead");
     const tBody = document.createElement("tbody");
-    for (i = 0; i < jsonFile.length; i++) {
+    for (i = 0; i < matrix2D.length; i++) {
         const tRow = document.createElement("tr");
-        for (j = 0; j < jsonFile[i].length; j++) {
+        for (j = 0; j < matrix2D[i].length; j++) {
             if (i == 0) {
                 const tCell = document.createElement("th");
-                tCell.innerHTML = jsonFile[i][j];
+                tCell.innerHTML = matrix2D[i][j];
                 tRow.appendChild(tCell);
                 tHead.appendChild(tRow);
             }
             else {
                 const tCell = document.createElement("td");
-                tCell.innerHTML = jsonFile[i][j];
+                tCell.innerHTML = matrix2D[i][j];
                 tRow.appendChild(tCell);
                 tBody.appendChild(tRow);
             }

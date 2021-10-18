@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "server1": "python -m http.server 8001",
+    "server": "python server.py"
+  },
   "dependencies": {
     "@types/papaparse": "5.2.0",
     "papaparse": "5.2.0"
