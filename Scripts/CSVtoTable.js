@@ -4,10 +4,11 @@ let jsonFile;
 /**Преобразует csv файл в JSON*/
 function parseCsv() {
     const csvFile = document.getElementById("csvFile").files[0];
-    Papa.parse(csvFile, {
+    Papa.parse(csvFile,{
+        header: true,
         complete: function (results) {
-            console.log(results);
             jsonFile = results.data;
+            console.log(results.data);
             create2DTable(jsonFile);
         }
     })

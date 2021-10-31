@@ -1,50 +1,73 @@
+/**
+ * @type {HTMLObjectElement}
+ */
+//@ts-ignore
 const obj = document.getElementById("svgDocument");
-
-// https://stackoverflow.com/questions/2753732/how-to-access-svg-elements-with-javascript
-// It's important to add an load event listener to the object,
-// as it will load the svg doc asynchronously
 obj.addEventListener("load", function () {
-    // get the inner DOM of alpha.svg
-    var svgDoc = obj.contentDocument;
-    // get the inner element by id
-    // var delta = svgDoc.getElementById("Kozulka1");
-    // console.log(delta);
-    // // add behaviour
-    // delta.addEventListener("mousedown", function () {
-    //     alert('hello world!');
-    // }, false);
-    var node = svgDoc.getElementsByTagName("title");
-    var node2 = new Array();
-    
-    console.log(node);
+    let svgDoc = obj.contentDocument;
+    let node = svgDoc.getElementsByTagName("title");
+
     Array.from(node).forEach(element => {
-        if (element.innerHTML == "Kozulka1") {
-            let parent = element.parentElement;
-            Array.from(parent.children).forEach(childElement => {
-                console.log(childElement);
-                if(childElement.tagName == "path"){
-                    console.log(childElement.getTotalLength());
-                    let startPosition = childElement.getPointAtLength(0);
-                    let length = childElement.getTotalLength();
-                    
+        if (elementIsPathLocation(element.innerHTML)) {
+            /**
+             * @type {HTMLElement} parent
+             */
+            let groupElement = element.parentElement;
+            let location = element.innerHTML;
+            //@ts-ignore
+            Array.from(groupElement.children).forEach(/** @param {SVGGeometryElement} pathElement */ (pathElement) => {
+                if (pathElement.tagName == "path") {
+                    let startPos = pathElement.getPointAtLength(0);
+                    let length = pathElement.getTotalLength();
+                    let num = poleRange[location];
+                    let pathBends = pathDesctructor(pathElement);
+                    for (let partLength = (length/num); partLength <= length; partLength+=(length/num)) {
+                        let path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                        let endPos = pathElement.getPointAtLength(partLength);
+                        path.setAttribute("d", pathConstructor(pathElement, startPos, endPos, partLength, pathBends));
+                        startPos = pathElement.getPointAtLength(partLength);
+                        path.setAttribute("class", "st5");
+                        groupElement.appendChild(path);
+                    }
+
+                    pathElement.remove();
+
                 }
             });
-            alert("opa ");
-            node2.push(element);
         }
     }
     );
-    console.log(node2);
 }, false);
 
-obj.addEventListener("load", function () {
-    // get the inner DOM of alpha.svg
-    var svgLine = document.getElementById("line");
-    // get the inner element by id
-    svgLine.onclick = svgFunction;
-}, false);
+// <path d="M0 841.89 L33.01 808.88 L255.12 808.88 L283.46 841.89" class="st1"/>}
+function pathDesctructor(pathElement){
+    //Возвращает массив координат направлений отрезка "L". При наличии изгибов в svg возвращает массив из больше, чем одного элемента
+    let pathBends = pathElement.getAttribute("d").split(" ").map((pathContent, index, pathValue) => {
+        if(pathContent.startsWith("L")){
+            return {x:pathContent.substring(1), y:pathValue[index+1]};
+        }
+    }).filter(u => u);
+    return pathBends;
+}
 
-function svgFunction() {
-    var svgLine = document.getElementById("line");
-    svgLine.setAttribute("stroke", "green");
+function pathConstructor(pathElement, startPos, endPos, partLength, pathBends){
+    let d = "";
+    if(pathElement.getPointAtLength(partLength).x > pathBends[0].x){
+        d = `M${startPos.x} ${startPos.y} L${pathBends[0].x} ${pathBends[0].y} L${endPos.x} ${endPos.y}`
+        pathBends.splice(0,1);
+    }
+    else{
+        d = `M${startPos.x} ${startPos.y} L${endPos.x} ${endPos.y}`;
+    }
+    console.log(d);
+    return d;
+}
+
+function elementIsPathLocation(innerHTML){
+    for (const location in poleRange) {
+        if(location==innerHTML){
+            return true;
+        }
+    }
+    return false;
 }

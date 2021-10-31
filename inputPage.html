@@ -5,27 +5,8 @@
 </head>
 <body>
     <h1>Hello!</h1>
-    <form>
-        <input type="file" accept=".csv" id="csvFile">
-        <button type="button" id="btnParseCsv">Обработать файл</button>
-    </form>
-    <div class="canvas">
-        <svg width="400" height="400" viewBox="0 0 100 100">
-            <line id="line" x1 = "0" y1="0" x2="100" y2="100" stroke="black"/>
-            <path d="M10 50 L0 20 m50 50 l100 0" stroke="red"/>
-            <path d="M0 0 L5 40" stroke="black"/>
-            <path fill="none" stroke="red"
-            d="M 10,30
-               A 20,20 0,0,1 50,30
-               A 20,20 0,0,1 90,30
-               Q 90,60 50,90
-               Q 10,60 10,30 z" />
-        </svg>
-    </canvas>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.2.0/papaparse.min.js"></script>
     <object id = "svgDocument" data="./assets/schemes/try.svg" type="image/svg+xml"></object>
-    <script src="./Scripts/svgStaff.js"> </script>
-    <script src="./Scripts/CSVtoTable.js"> </script>
-
+    <script src="./Scripts/maintenanceData.js"></script>
+    <script src="./Scripts/svgStaff.js"></script>
 </body>
 </html>

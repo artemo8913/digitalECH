@@ -16,6 +16,7 @@
 		.st2 {fill:#ffffff;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
 		.st3 {fill:#000000;font-family:Times New Roman;font-size:1.00001em}
 		.st4 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+		.st5 {stroke:#ff0000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
 	]]>
 	</style>
 
@@ -45,5 +46,16 @@
 			<v:textRect cx="7.08661" cy="834.803" width="14.18" height="14.1732"/>
 			<rect x="0" y="827.717" width="14.1732" height="14.1732" class="st2"/>
 			<text x="5.09" y="838.4" class="st3" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>I</text>		</g>
+		<g id="shape10-13" v:mID="10" v:groupContext="shape" transform="translate(56.6929,-545.669)">
+			<title>Козулька2</title>
+			<path d="M0 841.89 L396.85 841.89" class="st1"/>
+		</g>
+		<g id="shape11-16" v:mID="11" v:groupContext="shape" transform="translate(244.488,-538.583)">
+			<title>Лист.11</title>
+			<desc>II</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="10.6299" cy="834.803" width="21.26" height="14.1732"/>
+			<rect x="0" y="827.717" width="21.2598" height="14.1732" class="st2"/>
+			<text x="6.63" y="838.4" class="st3" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>II</text>		</g>
 	</g>
 </svg>

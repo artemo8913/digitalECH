@@ -17,9 +17,3 @@ input[type="text"]{
     background-color: white;
 }
 
-button{
-    background-color: #686868;
-    width: 5cm;
-    height: 5cm;
-    font: 100px Tahoma sans-serif;
-}

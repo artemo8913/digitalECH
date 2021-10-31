@@ -9,14 +9,8 @@
 
 <body>
     <div>
-        <table style="width: 100%;">
-            <thead>
-                <td><img src="./assets/images/Logo.png" alt="Не удалось загрузить логотип" class="logo"></td>
-                <td style="text-align: left;">
-                    <p>Цифровая Красноярская дистанция электроснабжения</p>
-                </td>
-            </thead>
-        </table>
+        <img src="./assets/images/Logo.png" alt="Не удалось загрузить логотип" class="logo"></td>
+        <p>Цифровая Красноярская дистанция электроснабжения</p>
     </div>
     <div>
         <form action="./assets/images/Logo.png" method="POST">
@@ -26,10 +20,20 @@
         </form>
     </div>
     <div>
-        <script>
-            
-        </script>
+        <form>
+            <input type="file" accept=".csv" id="generalDataFile">
+            <button type="button" id="btnLoadGeneralDataFile">Загрузить данные по контактной сети</button>
+        </form>
+        <form>
+            <input type="file" accept=".csv" id="maintenanceDataFile">
+            <button type="button" id="btnMaintenanceDataFile">Обработать данные выполненных работ</button>
+        </form>
     </div>
+    <object id = "svgDocument" data="./assets/schemes/try.svg" type="image/svg+xml"></object>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.2.0/papaparse.min.js"></script>
+    <script src="./Scripts/maintenanceData.js"></script>
+    <script src="./Scripts/parseControl.js"></script>
+    <script src="./Scripts/svgStaff.js"></script>
 </body>
 
 </html>
