@@ -24,7 +24,7 @@ function parseMaintenanceDataCsv() {
         complete: function (results) {
             maintenanceData = results.data;
             console.log(maintenanceData);
-            processMaintanceData();
+            processMaintanceData(maintenanceData);
         }
     })
 }

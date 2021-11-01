@@ -1,9 +1,11 @@
+const svgProcessBtn = document.getElementById("svgProcess");
+svgProcessBtn.onclick = svgProcess;
 /**
  * @type {HTMLObjectElement}
  */
 //@ts-ignore
 const obj = document.getElementById("svgDocument");
-obj.addEventListener("load", function () {
+function svgProcess(){
     let svgDoc = obj.contentDocument;
     let node = svgDoc.getElementsByTagName("title");
 
@@ -21,13 +23,29 @@ obj.addEventListener("load", function () {
                     let length = pathElement.getTotalLength();
                     let num = poleRange[location];
                     let pathBends = pathDesctructor(pathElement);
-                    for (let partLength = (length/num); partLength <= length; partLength+=(length/num)) {
+                    let partLength = length / num;
+                    let color = true;
+                    // console.log(element);
+                    // for (let partLength = (length/num), color = true; partLength <= length; partLength += (length/num)) {
+                    for(let counter = 0; counter < num; counter++){ 
                         let path = document.createElementNS("http://www.w3.org/2000/svg", "path");
                         let endPos = pathElement.getPointAtLength(partLength);
                         path.setAttribute("d", pathConstructor(pathElement, startPos, endPos, partLength, pathBends));
-                        startPos = pathElement.getPointAtLength(partLength);
-                        path.setAttribute("class", "st5");
+                        startPos = endPos;
+                        partLength += length / num;
+                        // path.setAttribute("class", "st5");
+                        if(color){
+                            path.setAttribute("stroke", `#ff0000`);
+                            color = false;
+                        }
+                        else{
+                            path.setAttribute("stroke", `#00ff00`);
+                            color = true;
+                        }
                         groupElement.appendChild(path);
+                        // console.log("partLength = " + partLength);
+                        // console.log("length = " + length);
+                        // console.log(partLength <= length);
                     }
 
                     pathElement.remove();
@@ -37,7 +55,7 @@ obj.addEventListener("load", function () {
         }
     }
     );
-}, false);
+};
 
 // <path d="M0 841.89 L33.01 808.88 L255.12 808.88 L283.46 841.89" class="st1"/>}
 function pathDesctructor(pathElement){
@@ -52,6 +70,8 @@ function pathDesctructor(pathElement){
 
 function pathConstructor(pathElement, startPos, endPos, partLength, pathBends){
     let d = "";
+    // console.log(pathElement);
+    // console.log("\tpartLength =" + partLength +"\tpathBends" + JSON.stringify(pathBends));
     if(pathElement.getPointAtLength(partLength).x > pathBends[0].x){
         d = `M${startPos.x} ${startPos.y} L${pathBends[0].x} ${pathBends[0].y} L${endPos.x} ${endPos.y}`
         pathBends.splice(0,1);
@@ -59,7 +79,7 @@ function pathConstructor(pathElement, startPos, endPos, partLength, pathBends){
     else{
         d = `M${startPos.x} ${startPos.y} L${endPos.x} ${endPos.y}`;
     }
-    console.log(d);
+    // console.log("d = " + d + "\t");
     return d;
 }
 
