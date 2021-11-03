@@ -12,7 +12,7 @@ function parseGeneralDataCsv() {
         header: true,
         complete: function (results) {
             generalData = results.data;
-            countPoleRange(generalData);
+            processGeneralData(generalData);
         }
     })
 }
@@ -23,7 +23,7 @@ function parseMaintenanceDataCsv() {
         header: true,
         complete: function (results) {
             maintenanceData = results.data;
-            console.log(maintenanceData);
+            // console.log(maintenanceData);
             processMaintanceData(maintenanceData);
         }
     })
