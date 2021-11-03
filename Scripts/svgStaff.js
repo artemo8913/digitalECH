@@ -35,7 +35,6 @@ function svgProcess() {
                         partLength += length / num;
                         path.setAttribute("class", "st1");
                         juxtaposeSvgPathandSortedGeneralData(sortedGeneralData, locationFromSVG, path);
-                        // colorLines(generalData, locationFromSVG, path);
                         groupElement.appendChild(path);
                         // console.log("partLength = " + partLength);
                         // console.log("length = " + length);
