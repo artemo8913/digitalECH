@@ -4,8 +4,8 @@
     float: left;
 }
 @font-face {
-    font-family: "Aleo";
-    src: url("../assets/fonts/aleo-regular.otf") format("opentype");
+    /* font-family: "Aleo"; */
+    /* src: url("../assets/fonts/aleo-regular.otf") format("opentype"); */
 }
 body{
     background-color: #CBC9CC;
