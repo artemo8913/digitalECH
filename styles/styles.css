@@ -16,4 +16,10 @@ body{
 input[type="text"]{
     background-color: white;
 }
-
+#svgDocumentConteiner{
+    overflow: auto;
+    margin: auto;
+    border: 2px black solid;
+    width: 90%;
+    height: 50vh;
+}
