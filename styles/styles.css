@@ -3,10 +3,10 @@
     height: auto;
     float: left;
 }
-@font-face {
-    /* font-family: "Aleo"; */
-    /* src: url("../assets/fonts/aleo-regular.otf") format("opentype"); */
-}
+/* @font-face {
+    font-family: "Aleo";
+    src: url("../assets/fonts/aleo-regular.otf") format("opentype");
+} */
 body{
     background-color: #CBC9CC;
     color: black;
