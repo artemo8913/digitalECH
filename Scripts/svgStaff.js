@@ -91,45 +91,51 @@ function elementIsPathLocation(innerHTML) {
  * "Periodicity":number,
  * "Path":SVGElement}} objFromSortedGeneralData 
  * @param {SVGElement} path
- * @param {string} locationFromData
  */
-function colorLines(objFromSortedGeneralData, path, locationFromData) {
+function colorLines(objFromSortedGeneralData, path) {
     let yearMultiplier = 1000 * 60 * 60 * 24 * 365;
         if (!objFromSortedGeneralData["Date maintenance"]) {
             console.log(objFromSortedGeneralData);
             console.log(1);
             path.style.stroke = "#ff0000";
         }
+        //@ts-ignore
         else if (objFromSortedGeneralData["Date maintenance"] < (new Date(new Date() - yearMultiplier * objFromSortedGeneralData["Periodicity"]))) {
             console.log(objFromSortedGeneralData);
             console.log(2);
             path.style.stroke = "#ff0000";
         }
+        //@ts-ignore
         else if (objFromSortedGeneralData["Date maintenance"] < (new Date(new Date() - yearMultiplier * 6))) {
             console.log(objFromSortedGeneralData);
             console.log(3);
             path.style.stroke = "#ff0000";
         }
+        //@ts-ignore
         else if (objFromSortedGeneralData["Date maintenance"] < (new Date(new Date() - yearMultiplier * 5))) {
             console.log(objFromSortedGeneralData);
             console.log(4);
             path.style.stroke = "#ae6842";
         }
+        //@ts-ignore
         else if (objFromSortedGeneralData["Date maintenance"] < (new Date(new Date() - yearMultiplier * 4))) {
             console.log(objFromSortedGeneralData);
             console.log(5);
             path.style.stroke = "#4e6d56";
         }
+        //@ts-ignore
         else if (objFromSortedGeneralData["Date maintenance"] < (new Date(new Date() - yearMultiplier * 3))) {
             console.log(objFromSortedGeneralData);
             console.log(6);
             path.style.stroke = "#38fcff";
         }
+        //@ts-ignore
         else if (objFromSortedGeneralData["Date maintenance"] < (new Date(new Date() - yearMultiplier * 2))) {
             console.log(objFromSortedGeneralData);
             console.log(7);
             path.style.stroke = "#ff8700";
         }
+        //@ts-ignore
         else if (objFromSortedGeneralData["Date maintenance"] < (new Date(new Date() - yearMultiplier * 1))) {
             console.log(objFromSortedGeneralData);
             console.log(8);
@@ -154,7 +160,8 @@ function juxtaposeSvgPathandSortedGeneralData(sortedGeneralData, locationFromSVG
                 if(!data["Path"]){
                     data["Path"] = path;
                     // console.log(data);
-                    colorLines(data,path,locationFromData);
+                    colorLines(data,path);
+                    path.setAttribute("DateMaintenance", data["Date maintenance"]);
                     return;
                 }
             }
