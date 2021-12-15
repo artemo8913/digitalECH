@@ -14,7 +14,7 @@ let generalData = [];
 /**
  * Отсортированные объекты массива generalData по "Location with way number"
  * @type {{"Location with way number":{"Pole range": string,
- * "Date maintenance": Date;
+ * "Date maintenance": Date,
  * "Pole start": string,
  * "Pole end": string,
  * "Periodicity":number,
@@ -40,12 +40,44 @@ let maintenanceData = [];
  * @param {maintenanceData} maintenanceData 
  */
 function processMaintanceData(maintenanceData) {
+    maintenanceData = maintenanceData.filter(data => {
+        // console.log(data);
+        if (data["Location"] === "") {
+            console.log("Удалена строка с пустым значением локации!" + JSON.stringify(data));
+            return false;
+        }
+        //Проверка на пробелы (лучше сделать проверку на символы, которых быть вообще не должно!)
+        if (data["Date maintenance"].split(" ").length > 1) {
+            data["Date maintenance"] = data["Date maintenance"].split(" ").join("");
+            // console.log(data["Date maintenance"]);
+            console.log("Найдена строка с косячным символом (не цифра, не точка). Лишние символы удалены" + JSON.stringify(data));
+        }
+        //Меняем дату и месяц местами
+        let dateReverse = data["Date maintenance"].split(".");
+        data["Date maintenance"] = `${dateReverse[1]}.${dateReverse[0]}.${dateReverse[2]}`
+
+        if (new Date(data["Date maintenance"]) > new Date()) {
+            console.log("Удалена строка с датой текущего ремонта из будущего!" + JSON.stringify(data));
+            return false;
+        }
+        return true;
+    });
     maintenanceData.forEach(data => {
+        // console.log(data);
         //Уточняем местоположение опор        
         data["Location with way number"] = data["Location"] + data["Railway/waypoint number"];
+        //Убираем лишние символы
+        if (data["Pole range"].split(" ").length > 1) {
+            data["Pole range"] = data["Pole range"].split(" ").join("");
+            console.log("Найдена строка с косячным символом (не цифра и не тире) в пролете опор. Лишние символы удалены" + JSON.stringify(data));
+        }
         //Разбиваем диапазон опор в пределах которого проходил текущий ремонт на "начало" и "конец"
         data["Pole start"] = data["Pole range"].split("-")[0];
         data["Pole end"] = data["Pole range"].split("-")[1];
+        //Проверка на значения начальной и конечных опор
+        if (parseInt(data["Pole start"]) > parseInt(data["Pole end"])) {
+            [data["Pole start"], data["Pole end"]] = [data["Pole end"], data["Pole start"]];
+        }
     });
     console.log(maintenanceData);
     juxtaposeData(maintenanceData, sortedGeneralData);
@@ -105,24 +137,55 @@ function juxtaposeData(maintenanceData, sortedGeneralData) {
             // console.log(location);
             if (maintenancedata["Location with way number"] == location) {
                 let isCompare = false;
-                for (const poleRange of sortedGeneralData[location]) {
-                    // console.log(poleRange);
-                    if (maintenancedata["Pole start"] === poleRange["Pole start"]) {
-                        isCompare = true;
-                        // console.log(isCompare);
-                    }
-                    if(isCompare){
-                        if (new Date(maintenancedata["Date maintenance"]) > poleRange["Date maintenance"]) {
-                            poleRange["Date maintenance"] = new Date(maintenancedata["Date maintenance"]);
+                if (canComapre(maintenancedata, sortedGeneralData, location)) {
+                    for (const sortdata of sortedGeneralData[location]) {
+                        // console.log(sortdata);
+                        // console.log(poleRange);
+                        if (maintenancedata["Pole start"] === sortdata["Pole start"]) {
+                            isCompare = true;
+                            // console.log(isCompare);
+                        }
+                        if (isCompare) {
+                            if (new Date(maintenancedata["Date maintenance"]) > sortdata["Date maintenance"]) {
+                                sortdata["Date maintenance"] = new Date(maintenancedata["Date maintenance"]);
+                            }
+                        }
+                        if (isCompare && (maintenancedata["Pole end"] === sortdata["Pole end"])) {
+                            isCompare = false;
+                            // console.log(isCompare);
                         }
                     }
-                    if (isCompare && (maintenancedata["Pole end"] === poleRange["Pole end"])) {
-                        isCompare = false;
-                        // console.log(isCompare);
-                    }
                 }
+
             }
         }
     })
-    // console.log(sortedGeneralData);
+    console.log(sortedGeneralData);
+}
+/**
+ * 
+ */
+function canComapre(maintenancedata, sortedGeneralData, location) {
+    let poleStartIsEquel = false;
+    let poleEndIsEquel = false;
+    for (const sortdata of sortedGeneralData[location]) {
+        if (maintenancedata["Pole start"] === sortdata["Pole start"]) {
+            poleStartIsEquel = true;
+        }
+        else if (String(parseInt(maintenancedata["Pole start"])) === sortdata["Pole start"]) {
+            poleStartIsEquel = true;
+            console.log(`В диапазоне опор №${maintenancedata["Pole start"]}-${maintenancedata["Pole end"]} текущего ремонта ${location} в сутках ${maintenancedata["Date maintenance"]} содержится номер опоры, которого нет в нормативном журнале! Скорее всего имелся ввиду номер опоры №${sortdata["Pole start"]}`);
+        }
+        if (maintenancedata["Pole end"] === sortdata["Pole end"]) {
+            poleEndIsEquel = true;
+        }
+        else if (String(parseInt(maintenancedata["Pole end"])) === sortdata["Pole end"]) {
+            poleEndIsEquel = true;
+            console.log(`В диапазоне опор №${maintenancedata["Pole start"]}-${maintenancedata["Pole end"]} текущего ремонта ${location} в сутках ${maintenancedata["Date maintenance"]} содержится номер опоры, которого нет в нормативном журнале! Скорее всего имелся ввиду номер опоры №${sortdata["Pole end"]}`);
+        }
+    }
+    if (!(poleStartIsEquel && poleEndIsEquel)) {
+        console.log(`Начало (опора №${maintenancedata["Pole start"]} ${poleStartIsEquel}) или конец (опора №${maintenancedata["Pole end"]} ${poleEndIsEquel}) пролета опор проведенного текущего ремонта ${location} в сутках ${maintenancedata["Date maintenance"]} не верны! Так, у ${location} начало: ${sortedGeneralData[location][0]["Pole start"]} и конец ${sortedGeneralData[location][sortedGeneralData[location].length - 1]["Pole end"]}`);
+    }
+    return (poleStartIsEquel && poleEndIsEquel);
 }

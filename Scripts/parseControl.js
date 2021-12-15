@@ -8,9 +8,6 @@ btnMaintenanceDataFile.onclick = parseMaintenanceDataCsv;
 function parseGeneralDataCsv() {
     //@ts-ignore
     const csvFile = document.getElementById("generalDataFile").files[0];
-    csvFile.text().then(str => {
-        localStorage.setItem("csvFile", str);
-    });
     Papa.parse(csvFile, {
         header: true,
         complete: function (results) {

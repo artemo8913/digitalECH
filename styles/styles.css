@@ -21,5 +21,13 @@ input[type="text"]{
     margin: auto;
     border: 2px black solid;
     width: 90%;
-    height: 50vh;
+    height: 80vh;
+}
+
+#infoWindow{
+    position: absolute;
+    padding: 5px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
 }

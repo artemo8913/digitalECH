@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    <div id="infoWindow">asd</div>
     <div>
         <img src="./assets/images/Logo.png" alt="Не удалось загрузить логотип" class="logo"></td>
         <p>Цифровая Красноярская дистанция электроснабжения</p>
@@ -21,7 +22,7 @@
     </div>
     <div>
         <form>
-            <input type="file" accept=".csv" id="generalDataFile" value="C:\fakepath\Railways.csv" onChange="console.log(this.value)">
+            <input type="file" accept=".csv" id="generalDataFile" value="C:\fakepath\Railways.csv">
             <button type="button" id="btnLoadGeneralDataFile">Загрузить данные по контактной сети</button>
         </form>
         <form>
@@ -35,7 +36,8 @@
     <div id = "svgDocumentConteiner">
         <object id = "svgDocument" data="./assets/schemes/try.svg" type="image/svg+xml"></object>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.2.0/papaparse.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.2.0/papaparse.min.js"></script> -->
+    <script src="./node_modules/papaparse/papaparse.js"></script>
     <script src="./Scripts/maintenanceData.js"></script>
     <script src="./Scripts/parseControl.js"></script>
     <script src="./Scripts/svgStaff.js"></script>
