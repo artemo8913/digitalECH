@@ -268,7 +268,7 @@ function groupRailwaysDataByDate(groupedByLocationData) {
                     "Pole start": poleStart,
                     "Pole end": poleEnd,
                     "Pole range": `${poleStart}-${poleEnd}`,
-                    "Date maintenance": poleRangesData[i]["Date maintenance"],
+                    "Date maintenance": poleRangesData[i-1]["Date maintenance"],
                     "Pole ranges count": stack.length,
                     "Relative Length": stack.length / groupedByLocationData[location].length
                 });
