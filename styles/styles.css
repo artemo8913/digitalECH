@@ -25,7 +25,7 @@ input[type="text"]{
 }
 
 #infoWindow{
-    position: absolute;
+    position: fixed;
     padding: 5px;
     background-color: white;
     border: 1px solid black;

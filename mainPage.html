@@ -11,36 +11,25 @@
     <div id="infoWindow">asd</div>
     <div>
         <img src="./assets/images/Logo.png" alt="Не удалось загрузить логотип" class="logo"></td>
-        <p>Цифровая Красноярская дистанция электроснабжения</p>
-    </div>
-    <div>
-        <form action="./assets/images/Logo.png" method="POST">
-            Логин: <input type="text" name="login">
-            Пароль: <input type="password" name="password">
-            <input type="submit" value="Войти">
-        </form>
+        <p>Цифровая Красноярская дистанция электроснабжения. Текуший ремонт контактной сети</p>
     </div>
     <div>
         <form>
-            <input type="file" accept=".csv" id="generalDataFile" value="C:\fakepath\Railways.csv">
-            <button type="button" id="btnLoadGeneralDataFile">Загрузить данные по контактной сети</button>
-        </form>
-        <form>
-            <input type="file" accept=".csv" id="maintenanceDataFile">
+            <input type="file" accept=".csv" id="maintenanceTableFile">
             <button type="button" id="btnMaintenanceDataFile">Обработать данные выполненных работ</button>
-        </form>
-        <form>
-            <button id="svgProcess" type="button">Обработать SVG график</button>
         </form>
     </div>
     <div id = "svgDocumentConteiner">
         <object id = "svgDocument" data="./assets/schemes/try.svg" type="image/svg+xml"></object>
     </div>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.2.0/papaparse.min.js"></script> -->
+    <script src="./Scripts/mock/railwaysDataTable.js"></script>
+    <script src="./Scripts/mock/maintenanceTable.js"></script>
     <script src="./node_modules/papaparse/papaparse.js"></script>
     <script src="./Scripts/maintenanceData.js"></script>
-    <script src="./Scripts/parseControl.js"></script>
+    <script src="./Scripts/app.js"></script>
     <script src="./Scripts/svgStaff.js"></script>
+    <script src="./Scripts/infoWindow.js"></script>
 </body>
 
 </html>
