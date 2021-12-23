@@ -55,6 +55,10 @@ function svgProcessV2(svgSchemeTitles, groupedByDateAndLocationData) {
                         };
                         svgPathsData[locationSVG] = pathConstructorV2(groupedByDateAndLocationData[locationSVG], svgPathData, groupElement, locationSVG);
                         pathElement.remove();
+                        if (locationSVG === "Малиногорка1") {
+                            svgPathsData["Малиногорка1"][svgPathsData["Малиногорка1"].length - 1]["path"].scrollIntoView();
+                        }
+
                     }
                 }
             );
@@ -78,6 +82,11 @@ function svgProcessV2(svgSchemeTitles, groupedByDateAndLocationData) {
  * @param {string} location
  */
 function pathConstructorV2(poleRangesData, initialSvgPathData, groupElement, location) {
+    /**
+     * Начало path участка. Начало одного участка - конец другого (кроме самого первого участка)
+     * @type {{x,y}}
+     */
+    let startPos = initialSvgPathData["path"].getPointAtLength(0);
     /**
      * Конец path участка. Начало одного участка - конец другого (кроме самого первого участка)
      * @type {{x,y}}
@@ -105,8 +114,8 @@ function pathConstructorV2(poleRangesData, initialSvgPathData, groupElement, loc
                 break;
             }
         }
-        newPath.setAttribute("d", dConstructor(newPathPoints));
-        newPath.setAttribute("class", "st1");
+        newPath.setAttribute("d", dAttributeConstructor(newPathPoints));
+        newPath.setAttribute("class", "pathStyle");
         newSvgPathsData.push({
             path: newPath,
             dAttribute: newPath.getAttribute("d"),
@@ -115,6 +124,7 @@ function pathConstructorV2(poleRangesData, initialSvgPathData, groupElement, loc
         colorLinesV2(poleRangeData, newPath);
         createNewPath(groupElement, newPath);
         infoWindowEvent(newPath, poleRangeData, location);
+        createMarksOnPath(newPath, newPathPoints, poleRangeData);
     });
     return newSvgPathsData;
 }
@@ -122,11 +132,48 @@ function createNewPath(groupElement, newPath) {
     groupElement.appendChild(newPath);
 }
 /**
+ * Создать и разместить отметки диапазона опор на схеме (path элементе). Чтобы не захламлять схему множеством налегающих друг
+ * на друга символов/отметок, прорисовываются и отображаются только "конечные" опоры
+ * @param {SVGGeometryElement} pathElement
+ * @param {Array<{x,y}>} pathPoints
+ * @param {{"Pole start": string;
+ *     "Pole end": string;
+ *     "Pole range": string;
+ *     "Date maintenance": Date;
+ *     Periodicity: number;
+ *     "Pole ranges count": number;
+ *     "Relative Length": number}} poleRangeData
+ */
+function createMarksOnPath(pathElement, pathPoints, poleRangeData) {
+    const firstPathPoint = pathPoints[0];
+    const lastPathPoint = pathPoints[pathPoints.length - 1];
+    const markPathPoints = [];
+    const markOffset = 5;
+    markPathPoints.push({x:lastPathPoint.x, y:(lastPathPoint.y+markOffset)});
+    markPathPoints.push({x:lastPathPoint.x, y:(lastPathPoint.y-markOffset)});
+
+    const poleStart = poleRangeData["Pole start"];
+    const poleEnd = poleRangeData["Pole end"];
+
+    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    text.setAttribute("class", "poleMarkText");
+    text.setAttribute("x", lastPathPoint.x);
+    text.setAttribute("y", lastPathPoint.y);
+    text.innerHTML = poleEnd;
+
+    const svgMark = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    svgMark.setAttribute("class", "poleSvgMark");
+    svgMark.setAttribute("d", dAttributeConstructor(markPathPoints));
+
+    pathElement.parentElement.appendChild(text);
+    pathElement.parentElement.appendChild(svgMark);
+}
+/**
  * По массиву с точками x, y формирует атрубут "d" SVG элемента "path"
  * @param {{x:Number,y:Number}[]} pathPoints 
  * @returns {string} dAttribute
  */
-function dConstructor(pathPoints) {
+function dAttributeConstructor(pathPoints) {
     let dAttribute = "";
     pathPoints.forEach((pathPoint, index) => {
         if (index === 0) {
