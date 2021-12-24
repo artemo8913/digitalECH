@@ -32,7 +32,7 @@ async function mainProcess(callback) {
      * @type {HTMLObjectElement}
      */
     //@ts-ignore
-    const obj = document.getElementById("svgDocument");
+    const obj = document.getElementById("svgDocument__content");
     const svgDoc = obj.contentDocument;
     const svgSchemeTitles = svgDoc.getElementsByTagName("title");
     const svgProcessBtn = document.getElementById("svgProcess");

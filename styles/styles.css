@@ -1,30 +1,47 @@
-.logo{
+.header{
+    display: flex;
+    align-content: center;
+    justify-items: center;
+    align-items: flex-start;
+    flex-direction: row;
+    margin-bottom: 15px;
+
+}
+.header__logo{
     width: 200px;
     height: auto;
-    float: left;
 }
-/* @font-face {
+@font-face {
     font-family: "Aleo";
     src: url("../assets/fonts/aleo-regular.otf") format("opentype");
-} */
+}
 body{
     background-color: #CBC9CC;
     color: black;
-    /* font: 24px "Aleo"; */
+    font-family:"Aleo","Times New Roman";
     border-top: 5px solid black ;
+}
+.load-maintenance-date{
+    margin-bottom: 15px;
 }
 input[type="text"]{
     background-color: white;
 }
-#svgDocumentConteiner{
+.content{
+    display: flex;
+    align-content: flex-start;
+    flex-direction: row;
+}
+.svgDocument__conteiner{
     overflow: auto;
     margin: auto;
     border: 2px black solid;
-    width: 90%;
     height: 80vh;
 }
-
-#infoWindow{
+.content__asideInfo{
+    background-color: white;
+}
+.infoWindow{
     position: fixed;
     padding: 5px;
     background-color: white;
