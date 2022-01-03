@@ -8,7 +8,6 @@
 </head>
 
 <body>
-    <div class="infoWindow" id="infoWindow" hidden></div>
     <div class="header">
         <img src="./assets/images/Logo.png" alt="Не удалось загрузить логотип" class="header__logo"></td>
         <div class="header__title">
@@ -23,11 +22,28 @@
         </form>
     </div>
     <div class="content">
-        <div class="svgDocument__conteiner" id = "svgDocument__conteiner">
+        <div class="infoWindow" id="infoWindow" hidden></div>
+        <div class="svgDocument__conteiner">
             <object id = "svgDocument__content" data="./assets/schemes/try.svg" type="image/svg+xml"></object>
         </div>
-        <div class="content__asideInfo">
+        <form class="svgDocument__scale-change">
+            <button type="button" class="svgDocument__scale-change_increase">+</button>
+            <button type="button" class="svgDocument__scale-change_decrease">-</button>
+        </form>
+        <div class="content__info-aside" hidden>
+            <h3 class="content__info-aside-header">Информация о выбранном участке:</h3>
+            <div class="content__info-aside-body">
+                <div class="content__info-aside-location">
+                    <h4>Станция/перегон:</h4><h4></h4>
+                </div>
+                <div class="content__info-aside-railway-number">
+                    <h4>Номер пути:</h4><h4></h4>
+                </div>
+                <div class="content__info-aside-railway-number">
+                    <h4>Номер пути:</h4><h4></h4>
+                </div>
 
+            </div>
         </div>    
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.2.0/papaparse.min.js"></script>
@@ -37,7 +53,8 @@
     <script src="./Scripts/maintenanceData.js"></script>
     <script src="./Scripts/app.js"></script>
     <script src="./Scripts/svgStaff.js"></script>
-    <script src="./Scripts/infoWindow.js"></script>
+    <script src="./Scripts/infoToolBars.js"></script>
+    <script src="./Scripts/navMenu.js"></script>
 </body>
 
 </html>
