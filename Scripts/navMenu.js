@@ -8,5 +8,5 @@ svgPathsData["Малиногорка1"][0]["path"]
  * @param {HTMLElement} element
  */
 function navigateTo(element){
-    element.scrollIntoView();
+    element.scrollIntoView({block:"center", inline:"end", behavior:"smooth"});
 }
