@@ -142,6 +142,11 @@
 			stroke-linecap: butt;
 			stroke-linejoin: round;
 			stroke-width: 4;
+			transition: 0.2s;
+		}
+
+		.pathStyle:hover {
+			stroke-width: 10;
 		}
 
 		.poleMarkText {
@@ -156,9 +161,12 @@
 			stroke-linejoin: round;
 			stroke-width: 0.5;
 		}
+
+		svg {
+			/* transition: 2s; */
+		}
 		]]>
 	</style>
-
 	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
 		<title>Страница-1</title>
 		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24"
