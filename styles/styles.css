@@ -18,7 +18,7 @@
 body{
     background-color: #CBC9CC;
     color: black;
-    font-family:"Aleo","Times New Roman";
+    font-family:"Times New Roman";
     border-top: 5px solid black ;
 }
 .load-maintenance-date{
@@ -31,18 +31,32 @@ input[type="text"]{
     display: flex;
     align-content: flex-start;
     flex-direction: row;
+    gap: 15px;
 }
 .svgDocument__conteiner{
     overflow: auto;
     margin: auto;
     border: 2px black solid;
-    height: 80vh;
+    height: 65vh;
 }
-.content__asideInfo{
-    background-color: white;
+.content__info-aside{
+    border: solid black 1px;
+    background-color: rgba(255, 255, 255,0.3);
+    padding: 15px;
+    border-radius: 5px;
+    min-width: 400px;
+}
+.svgDocument__scale-change{
+    display: flex;
+    flex-direction: column;
+}
+.svgDocument__scale-change_increase,
+.svgDocument__scale-change_decrease{
+    min-height: 25px;
+    min-width: 25px;
 }
 .infoWindow{
-    position: fixed;
+    position: absolute;
     padding: 5px;
     background-color: white;
     border: 1px solid black;
