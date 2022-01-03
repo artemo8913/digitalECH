@@ -55,16 +55,14 @@ function svgProcessV2(svgSchemeTitles, groupedByDateAndLocationData) {
                         };
                         svgPathsData[locationSVG] = pathConstructorV2(groupedByDateAndLocationData[locationSVG], svgPathData, groupElement, locationSVG);
                         pathElement.remove();
-                        if (locationSVG === "Малиногорка1") {
-                            svgPathsData["Малиногорка1"][svgPathsData["Малиногорка1"].length - 1]["path"].scrollIntoView();
-                        }
-
                     }
                 }
             );
         }
+        clearSVGToolTip(title);
     });
     console.log(svgPathsData);
+    navigateTo(svgPathsData["Малиногорка1"][0]["path"]);
 }
 /**
  * Формирование новых path элементов. Расчитывает координаты точек новых path
@@ -127,6 +125,17 @@ function pathConstructorV2(poleRangesData, initialSvgPathData, groupElement, loc
     });
     createMarksOnPath(poleRangesData, newSvgPathsData);
     return newSvgPathsData;
+}
+/**
+ * Для удаления стандартного для svg tooltip'а зменяет наименования тегов SVG схемы title на message
+ * @param {HTMLElement} title
+ */
+function clearSVGToolTip(title){
+    const messageEl = document.createElement("message");
+    messageEl.innerHTML = title.innerHTML;
+    title.parentElement.insertBefore(messageEl,title);
+    title.remove();
+
 }
 function createNewPath(groupElement, newPath) {
     groupElement.appendChild(newPath);
@@ -251,4 +260,20 @@ function colorLinesV2(poleRangeData, newPath) {
         // console.log(9);
         newPath.style.stroke = "#00FF00";
     }
+}
+//	<animate attributeName="width" from="336.287in" to="0" begin="2s" dur="10s" />
+/**
+ * Установить масштаб SVG документа
+ * @param {HTMLElement} svgContainer DIV контейнер с SVG объектом
+ * @param {SVGSVGElement} svgElement
+ * @param {Number} scaleStep
+ */
+function svgScale(svgContainer, svgElement, scaleStep){
+    const svgWidth = Number(svgElement.width.baseVal.value) * scaleStep;
+    const svgHeight = Number(svgElement.height.baseVal.value) * scaleStep;
+    svgContainer.scrollTop *= scaleStep;
+    svgContainer.scrollLeft *= scaleStep;
+
+    svgElement.setAttribute("height", svgHeight.toString());
+    svgElement.setAttribute("width", svgWidth.toString());
 }
