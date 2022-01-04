@@ -287,11 +287,12 @@ function svgScale(svgContainer, svgElement, scale, smooth = false) {
             width: (svgWHend.width - svgWHstart.width) / framesAmount,
             height: (svgWHend.height - svgWHstart.height) / framesAmount
         };
-        requestAnimationFrame(()=>chanageSvgWH(svgElement, svgWHdelta, svgWHend));
-        const timer = window.setInterval(chanageSvgWH, frameTime_ms, svgElement, svgWHdelta);
-        window.setTimeout(() => {
-            window.clearInterval(timer);
-        }, animationDuration_ms);
+        const scaleDelta = 0.01;
+        requestAnimationFrame(()=>chanageSvgWH(svgElement, svgWHdelta, svgWHend,scaleDelta));
+        // const timer = window.setInterval(chanageSvgWH, frameTime_ms, svgElement, svgWHdelta);
+        // window.setTimeout(() => {
+        //     window.clearInterval(timer);
+        // }, animationDuration_ms);
 
     }
     else {
@@ -309,7 +310,7 @@ function svgScale(svgContainer, svgElement, scale, smooth = false) {
  * @param {{width: number, height: number}} svgWHdelta
  * @param {{width: number, height: number}} svgWHend
  */
-function chanageSvgWH(svgElement, svgWHdelta, svgWHend) {
+function chanageSvgWH(svgElement, svgWHdelta, svgWHend, scaleDelta) {
     const svgWHstart = {
         width: Number(svgElement.width.baseVal.value),
         height: Number(svgElement.height.baseVal.value)
@@ -317,10 +318,16 @@ function chanageSvgWH(svgElement, svgWHdelta, svgWHend) {
     const svgWidth = svgWHstart.width + svgWHdelta.width;
     const svgHeight = svgWHstart.height + svgWHdelta.height;
 
-    svgElement.setAttribute("height", svgHeight.toString());
-    svgElement.setAttribute("width", svgWidth.toString());
+    svgElement.transform.baseVal.getItem(0).matrix.a += scaleDelta;
+    svgElement.transform.baseVal.getItem(0).matrix.d += scaleDelta;
+    // svgElement.setAttribute("height", svgHeight.toString());
+    // svgElement.setAttribute("width", svgWidth.toString());
+    
     console.log(1);
     // if(svgWHend.width > svgWHstart.width){
     //     requestAnimationFrame(()=>chanageSvgWH(svgElement, svgWHdelta, svgWHend));
     // }
+    if(2 > svgElement.transform.baseVal.getItem(0).matrix.a){
+        requestAnimationFrame(()=>chanageSvgWH(svgElement, svgWHdelta, svgWHend, scaleDelta));
+    }
 }
