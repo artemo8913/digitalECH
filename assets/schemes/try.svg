@@ -161,12 +161,12 @@
 			stroke-linejoin: round;
 			stroke-width: 0.5;
 		}
-		svg{
+		/* svg{
 			transition: 2s;
 		}
 		svg:hover{
 			transform: scale(2);
-		}
+		} */
 		]]>
 	</style>
 	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
