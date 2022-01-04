@@ -146,7 +146,7 @@
 		}
 
 		.pathStyle:hover {
-			stroke-width: 10;
+			stroke-width: 8;
 		}
 
 		.poleMarkText {
@@ -162,9 +162,12 @@
 			stroke-width: 0.5;
 		}
 
-		svg {
-			/* transition: 2s; */
+		/* svg {
+			transition: 2s;
 		}
+		svg:hover {
+			transform: scale(1.1) translate(0,0);
+		} */
 		]]>
 	</style>
 	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
