@@ -296,6 +296,6 @@ function chanageSvgWH(svgElement, scaleDelta) {
     svgElement.transform.baseVal.getItem(0).matrix.a += scaleDelta;
     svgElement.transform.baseVal.getItem(0).matrix.d += scaleDelta;
     if(2 > svgElement.transform.baseVal.getItem(0).matrix.a){
-        requestAnimationFrame(()=>chanageSvgWH(svgElement, svgWHdelta, svgWHend, scaleDelta));
+        requestAnimationFrame(()=>chanageSvgWH(svgElement, scaleDelta));
     }
 }
