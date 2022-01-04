@@ -60,9 +60,27 @@ async function mainProcess() {
 
     svgProcessV2(svgSchemeTitles, groupedByDateAndLocationData);
 
-    let scaleStep = 0.2;
-    btnScaleIncrease.onclick = () => svgScale(svgContainer, svgElement, 1 + scaleStep, true);
-    btnScaleDecrease.onclick = () => svgScale(svgContainer, svgElement, 1 - scaleStep, false);
+    const maxScale = 5;
+    const minScale = 0.1;
+    const scaleStep = 0.2;
+
+    const cameraInfo = {
+        currentScale: 1,
+        currentOriginPos: {x: 0, y: 0},
+    };
+
+    btnScaleIncrease.onclick = () => {
+        const oldScale = cameraInfo.currentScale;
+        cameraInfo.currentScale = Math.min(maxScale, cameraInfo.currentScale + scaleStep);
+
+        svgScale(svgContainer, svgElement, oldScale, cameraInfo.currentScale, true);
+    };
+    btnScaleDecrease.onclick = () => {
+        const oldScale = cameraInfo.currentScale;
+        cameraInfo.currentScale = Math.max(minScale, cameraInfo.currentScale - scaleStep);
+
+        svgScale(svgContainer, svgElement, oldScale, cameraInfo.currentScale, true);
+    };
 }
 
 window.addEventListener('load', (event) => {
