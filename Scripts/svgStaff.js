@@ -130,10 +130,10 @@ function pathConstructorV2(poleRangesData, initialSvgPathData, groupElement, loc
  * Для удаления стандартного для svg tooltip'а зменяет наименования тегов SVG схемы title на message
  * @param {HTMLElement} title
  */
-function clearSVGToolTip(title){
+function clearSVGToolTip(title) {
     const messageEl = document.createElement("message");
     messageEl.innerHTML = title.innerHTML;
-    title.parentElement.insertBefore(messageEl,title);
+    title.parentElement.insertBefore(messageEl, title);
     title.remove();
 
 }
@@ -155,7 +155,7 @@ function createNewPath(groupElement, newPath) {
  * "Path points":{x:Number,y:Number}[]}>} svgPathsData
  */
 function createMarksOnPath(poleRangesData, svgPathsData) {
-    poleRangesData.forEach((poleRangeData,index) =>{
+    poleRangesData.forEach((poleRangeData, index) => {
         const svgOnePathData = svgPathsData[index];
         const pathPoints = svgOnePathData["Path points"];
         const pathElement = svgOnePathData.path;
@@ -164,27 +164,27 @@ function createMarksOnPath(poleRangesData, svgPathsData) {
         const lastPathPoint = pathPoints[pathPoints.length - 1];
         const markPathPoints = [];
         const markOffset = 5;
-        markPathPoints.push({x:lastPathPoint.x, y:(lastPathPoint.y+markOffset)});
-        markPathPoints.push({x:lastPathPoint.x, y:(lastPathPoint.y-markOffset)});
-    
+        markPathPoints.push({ x: lastPathPoint.x, y: (lastPathPoint.y + markOffset) });
+        markPathPoints.push({ x: lastPathPoint.x, y: (lastPathPoint.y - markOffset) });
+
         const poleStart = poleRangeData["Pole start"];
         const poleEnd = poleRangeData["Pole end"];
-    
+
         const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
         text.setAttribute("class", "poleMarkText");
         text.setAttribute("x", lastPathPoint.x.toString());
-        text.setAttribute("y", (lastPathPoint.y-markOffset).toString());
+        text.setAttribute("y", (lastPathPoint.y - markOffset).toString());
         text.innerHTML = poleEnd;
-    
+
         const svgMark = document.createElementNS("http://www.w3.org/2000/svg", "path");
         svgMark.setAttribute("class", "poleSvgMark");
         svgMark.setAttribute("d", dAttributeConstructor(markPathPoints));
-    
+
         pathElement.parentElement.appendChild(text);
         pathElement.parentElement.appendChild(svgMark);
-    
+
     })
-    
+
 }
 /**
  * По массиву с точками x, y формирует атрубут "d" SVG элемента "path"
@@ -266,14 +266,61 @@ function colorLinesV2(poleRangeData, newPath) {
  * Установить масштаб SVG документа
  * @param {HTMLElement} svgContainer DIV контейнер с SVG объектом
  * @param {SVGSVGElement} svgElement
- * @param {Number} scaleStep
+ * @param {Number} scale масштаб приближения/отдаления
+ * @param {Boolean} smooth плавное масштабирование
  */
-function svgScale(svgContainer, svgElement, scaleStep){
-    const svgWidth = Number(svgElement.width.baseVal.value) * scaleStep;
-    const svgHeight = Number(svgElement.height.baseVal.value) * scaleStep;
-    svgContainer.scrollTop *= scaleStep;
-    svgContainer.scrollLeft *= scaleStep;
+function svgScale(svgContainer, svgElement, scale, smooth = false) {
+    if (smooth) {
+        const svgWHstart = {
+            width: Number(svgElement.width.baseVal.value),
+            height: Number(svgElement.height.baseVal.value)
+        };
+        const svgWHend = {
+            width: svgWHstart.width * scale,
+            height: svgWHstart.height * scale
+        };
+        const animationDuration_ms = 1000;
+        const fps = 10;
+        const frameTime_ms = 1000 / fps;
+        const framesAmount = animationDuration_ms / frameTime_ms;
+        const svgWHdelta = {
+            width: (svgWHend.width - svgWHstart.width) / framesAmount,
+            height: (svgWHend.height - svgWHstart.height) / framesAmount
+        };
+        requestAnimationFrame(()=>chanageSvgWH(svgElement, svgWHdelta, svgWHend));
+        const timer = window.setInterval(chanageSvgWH, frameTime_ms, svgElement, svgWHdelta);
+        window.setTimeout(() => {
+            window.clearInterval(timer);
+        }, animationDuration_ms);
+
+    }
+    else {
+        const svgWidth = Number(svgElement.width.baseVal.value) * scale;
+        const svgHeight = Number(svgElement.height.baseVal.value) * scale;
+        svgElement.setAttribute("height", svgHeight.toString());
+        svgElement.setAttribute("width", svgWidth.toString());
+        svgContainer.scrollTop *= scale;
+        svgContainer.scrollLeft *= scale;
+    }
+}
+/**
+ * 
+ * @param {SVGSVGElement} svgElement
+ * @param {{width: number, height: number}} svgWHdelta
+ * @param {{width: number, height: number}} svgWHend
+ */
+function chanageSvgWH(svgElement, svgWHdelta, svgWHend) {
+    const svgWHstart = {
+        width: Number(svgElement.width.baseVal.value),
+        height: Number(svgElement.height.baseVal.value)
+    };
+    const svgWidth = svgWHstart.width + svgWHdelta.width;
+    const svgHeight = svgWHstart.height + svgWHdelta.height;
 
     svgElement.setAttribute("height", svgHeight.toString());
     svgElement.setAttribute("width", svgWidth.toString());
+    console.log(1);
+    // if(svgWHend.width > svgWHstart.width){
+    //     requestAnimationFrame(()=>chanageSvgWH(svgElement, svgWHdelta, svgWHend));
+    // }
 }
