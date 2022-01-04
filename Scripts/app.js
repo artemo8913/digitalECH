@@ -24,7 +24,7 @@ function parseMaintenanceDataCsv() {
     }));
 }
 
-async function mainProcess(callback) {
+async function mainProcess() {
     const btnMaintenanceDataFile = document.getElementById("btnMaintenanceDataFile");
     /** @type {HTMLObjectElement} *///@ts-ignore
     const btnScaleIncrease = document.getElementsByClassName("svgDocument__scale-change_increase")[0];
@@ -61,8 +61,8 @@ async function mainProcess(callback) {
     svgProcessV2(svgSchemeTitles, groupedByDateAndLocationData);
 
     let scaleStep = 0.2;
-    btnScaleIncrease.onclick = ()=>svgScale(svgContainer, svgElement, 1+scaleStep);
-    btnScaleDecrease.onclick = ()=>svgScale(svgContainer, svgElement, 1-scaleStep);
+    btnScaleIncrease.onclick = () => svgScale(svgContainer, svgElement, 1 + scaleStep, true);
+    btnScaleDecrease.onclick = () => svgScale(svgContainer, svgElement, 1 - scaleStep, false);
 }
 
 window.addEventListener('load', (event) => {
