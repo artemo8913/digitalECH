@@ -271,28 +271,12 @@ function colorLinesV2(poleRangeData, newPath) {
  */
 function svgScale(svgContainer, svgElement, scale, smooth = false) {
     if (smooth) {
-        const svgWHstart = {
-            width: Number(svgElement.width.baseVal.value),
-            height: Number(svgElement.height.baseVal.value)
-        };
-        const svgWHend = {
-            width: svgWHstart.width * scale,
-            height: svgWHstart.height * scale
-        };
-        const animationDuration_ms = 1000;
-        const fps = 10;
-        const frameTime_ms = 1000 / fps;
-        const framesAmount = animationDuration_ms / frameTime_ms;
-        const svgWHdelta = {
-            width: (svgWHend.width - svgWHstart.width) / framesAmount,
-            height: (svgWHend.height - svgWHstart.height) / framesAmount
-        };
+        const scaleStart = {
+            x: svgElement.transform.baseVal.getItem(0).matrix.a,
+            y: svgElement.transform.baseVal.getItem(0).matrix.d             
+        }
         const scaleDelta = 0.01;
-        requestAnimationFrame(()=>chanageSvgWH(svgElement, svgWHdelta, svgWHend,scaleDelta));
-        // const timer = window.setInterval(chanageSvgWH, frameTime_ms, svgElement, svgWHdelta);
-        // window.setTimeout(() => {
-        //     window.clearInterval(timer);
-        // }, animationDuration_ms);
+        requestAnimationFrame(()=>chanageSvgWH(svgElement, scaleDelta));
 
     }
     else {
@@ -307,26 +291,10 @@ function svgScale(svgContainer, svgElement, scale, smooth = false) {
 /**
  * 
  * @param {SVGSVGElement} svgElement
- * @param {{width: number, height: number}} svgWHdelta
- * @param {{width: number, height: number}} svgWHend
  */
-function chanageSvgWH(svgElement, svgWHdelta, svgWHend, scaleDelta) {
-    const svgWHstart = {
-        width: Number(svgElement.width.baseVal.value),
-        height: Number(svgElement.height.baseVal.value)
-    };
-    const svgWidth = svgWHstart.width + svgWHdelta.width;
-    const svgHeight = svgWHstart.height + svgWHdelta.height;
-
+function chanageSvgWH(svgElement, scaleDelta) {
     svgElement.transform.baseVal.getItem(0).matrix.a += scaleDelta;
     svgElement.transform.baseVal.getItem(0).matrix.d += scaleDelta;
-    // svgElement.setAttribute("height", svgHeight.toString());
-    // svgElement.setAttribute("width", svgWidth.toString());
-    
-    console.log(1);
-    // if(svgWHend.width > svgWHstart.width){
-    //     requestAnimationFrame(()=>chanageSvgWH(svgElement, svgWHdelta, svgWHend));
-    // }
     if(2 > svgElement.transform.baseVal.getItem(0).matrix.a){
         requestAnimationFrame(()=>chanageSvgWH(svgElement, svgWHdelta, svgWHend, scaleDelta));
     }
