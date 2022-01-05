@@ -272,28 +272,7 @@ function colorLinesV2(poleRangeData, newPath) {
  */
 function svgScale(svgContainer, svgElement, scaleFrom, scaleTo, smooth = false) {
     if (smooth) {
-        // const svgWHstart = {
-        //     width: Number(svgElement.width.baseVal.value),
-        //     height: Number(svgElement.height.baseVal.value)
-        // };
-        // const svgWHend = {
-        //     width: svgWHstart.width * scaleTo,
-        //     height: svgWHstart.height * scaleTo
-        // };
-        // const animationDuration_ms = 1000;
-        // const fps = 10;
-        // const frameTime_ms = 1000 / fps;
-        // const framesAmount = animationDuration_ms / frameTime_ms;
-        // const svgWHdelta = {
-        //     width: (svgWHend.width - svgWHstart.width) / framesAmount,
-        //     height: (svgWHend.height - svgWHstart.height) / framesAmount
-        // };
-        // // requestAnimationFrame(()=>chanageSvgWH(svgElement, svgWHdelta, svgWHend));
-        // const timer = window.setInterval(chanageSvgWH, frameTime_ms, svgElement, svgWHdelta);
-        // window.setTimeout(() => {
-        //     window.clearInterval(timer);
-        // }, animationDuration_ms);
-        changeSvgScale(svgElement, 600, scaleFrom, scaleTo);
+        changeSvgScale(svgElement, 10000, scaleFrom, scaleTo);
     }
     else {
         const svgWidth = Number(svgElement.width.baseVal.value) * scaleTo;
