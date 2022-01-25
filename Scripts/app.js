@@ -37,6 +37,8 @@ async function mainProcess() {
     const obj = document.getElementById("svgDocument__content");
     const svgDoc = obj.contentDocument;
     const svgElement = svgDoc.getElementsByTagName("svg")[0];
+    const svgMainGroupElement = svgDoc.getElementById("mainGroup");
+    console.log(svgMainGroupElement);
     /** @type {HTMLObjectElement} *///@ts-ignore
     const svgContainer = document.getElementsByClassName("svgDocument__conteiner")[0];
     const svgSchemeTitles = svgDoc.getElementsByTagName("title");
@@ -73,14 +75,15 @@ async function mainProcess() {
         const oldScale = cameraInfo.currentScale;
         cameraInfo.currentScale = Math.min(maxScale, cameraInfo.currentScale + scaleStep);
 
-        svgScale(svgContainer, svgElement, oldScale, cameraInfo.currentScale, true);
+        changeSvgScale(svgMainGroupElement, 600, oldScale, cameraInfo.currentScale);
     };
     btnScaleDecrease.onclick = () => {
         const oldScale = cameraInfo.currentScale;
         cameraInfo.currentScale = Math.max(minScale, cameraInfo.currentScale - scaleStep);
 
-        svgScale(svgContainer, svgElement, oldScale, cameraInfo.currentScale, true);
+        changeSvgScale(svgMainGroupElement, 600, oldScale, cameraInfo.currentScale);
     };
+    svgElement.addEventListener("click",event=>console.log(event));
 }
 
 window.addEventListener('load', (event) => {

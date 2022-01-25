@@ -261,70 +261,6 @@ function colorLinesV2(poleRangeData, newPath) {
         newPath.style.stroke = "#00FF00";
     }
 }
-//	<animate attributeName="width" from="336.287in" to="0" begin="2s" dur="10s" />
-/**
- * Установить масштаб SVG документа
- * @param {HTMLElement} svgContainer DIV контейнер с SVG объектом
- * @param {SVGSVGElement} svgElement
- * @param {Number} scaleFrom
- * @param {Number} scaleTo масштаб приближения/отдаления
- * @param {Boolean} smooth плавное масштабирование
- */
-function svgScale(svgContainer, svgElement, scaleFrom, scaleTo, smooth = false) {
-    if (smooth) {
-        // const svgWHstart = {
-        //     width: Number(svgElement.width.baseVal.value),
-        //     height: Number(svgElement.height.baseVal.value)
-        // };
-        // const svgWHend = {
-        //     width: svgWHstart.width * scaleTo,
-        //     height: svgWHstart.height * scaleTo
-        // };
-        // const animationDuration_ms = 1000;
-        // const fps = 10;
-        // const frameTime_ms = 1000 / fps;
-        // const framesAmount = animationDuration_ms / frameTime_ms;
-        // const svgWHdelta = {
-        //     width: (svgWHend.width - svgWHstart.width) / framesAmount,
-        //     height: (svgWHend.height - svgWHstart.height) / framesAmount
-        // };
-        // // requestAnimationFrame(()=>chanageSvgWH(svgElement, svgWHdelta, svgWHend));
-        // const timer = window.setInterval(chanageSvgWH, frameTime_ms, svgElement, svgWHdelta);
-        // window.setTimeout(() => {
-        //     window.clearInterval(timer);
-        // }, animationDuration_ms);
-        changeSvgScale(svgElement, 600, scaleFrom, scaleTo);
-    }
-    else {
-        const svgWidth = Number(svgElement.width.baseVal.value) * scaleTo;
-        const svgHeight = Number(svgElement.height.baseVal.value) * scaleTo;
-        svgElement.setAttribute("height", svgHeight.toString());
-        svgElement.setAttribute("width", svgWidth.toString());
-        svgContainer.scrollTop *= scaleTo;
-        svgContainer.scrollLeft *= scaleTo;
-    }
-}
-
-/**
- * @param {SVGSVGElement} svgElement
- * @param {{width: number, height: number}} svgWHdelta
- * @param {{width: number, height: number}} svgWHend
- */
-function chanageSvgWH(svgElement, svgWHdelta, svgWHend) {
-    const svgWHstart = {
-        width: Number(svgElement.width.baseVal.value),
-        height: Number(svgElement.height.baseVal.value)
-    };
-    const svgWidth = svgWHstart.width + svgWHdelta.width;
-    const svgHeight = svgWHstart.height + svgWHdelta.height;
-
-    svgElement.setAttribute("height", svgHeight.toString());
-    svgElement.setAttribute("width", svgWidth.toString());
-    console.log(1);
-    // if(svgWHend.width > svgWHstart.width){
-    //     requestAnimationFrame(()=>chanageSvgWH(svgElement, svgWHdelta, svgWHend));
-    // }
-}
 
 /**
  * @param {SVGSVGElement} svgElement
@@ -335,7 +271,6 @@ function chanageSvgWH(svgElement, svgWHdelta, svgWHend) {
 function changeSvgScale(svgElement, duration, scaleFrom, scaleTo) {
     let startTime = null;
     const deltaScale = scaleTo - scaleFrom;
-
     /**
      * @param {number} timestamp об этом читай здесь: https://developer.mozilla.org/ru/docs/Web/API/window/requestAnimationFrame#notes
      */
@@ -345,7 +280,6 @@ function changeSvgScale(svgElement, duration, scaleFrom, scaleTo) {
         }
 
         const dt = timestamp - startTime;
-
         if (dt < duration) {
             requestAnimationFrame(anim);
             svgElement.style.transform = `scale(${scaleFrom + deltaScale * dt / duration})`;
@@ -353,6 +287,5 @@ function changeSvgScale(svgElement, duration, scaleFrom, scaleTo) {
             svgElement.style.transform = `scale(${scaleTo})`;
         }
     }
-
     requestAnimationFrame(anim);
 }
