@@ -264,28 +264,13 @@ function colorLinesV2(poleRangeData, newPath) {
 
 /**
  * @param {SVGSVGElement} svgElement
- * @param {number} duration
- * @param {number} scaleFrom
- * @param {number} scaleTo
+ * @param {number} scale
  */
-function changeSvgScale(svgElement, duration, scaleFrom, scaleTo) {
-    let startTime = null;
-    const deltaScale = scaleTo - scaleFrom;
-    /**
-     * @param {number} timestamp об этом читай здесь: https://developer.mozilla.org/ru/docs/Web/API/window/requestAnimationFrame#notes
-     */
-    const anim = (timestamp) => {
-        if (!startTime) {
-            startTime = timestamp;
-        }
-
-        const dt = timestamp - startTime;
-        if (dt < duration) {
-            requestAnimationFrame(anim);
-            svgElement.style.transform = `scale(${scaleFrom + deltaScale * dt / duration})`;
-        } else {
-            svgElement.style.transform = `scale(${scaleTo})`;
-        }
-    }
-    requestAnimationFrame(anim);
+function changeSvgScale(svgElement, svgContainer, scale) {
+    const svgWidth = Number(svgElement.width.baseVal.value) * scale;
+    const svgHeight = Number(svgElement.height.baseVal.value) * scale;
+    svgElement.setAttribute("height", svgHeight.toString());
+    svgElement.setAttribute("width", svgWidth.toString());
+    svgContainer.scrollTop *= scale;
+    svgContainer.scrollLeft *= scale;
 }
