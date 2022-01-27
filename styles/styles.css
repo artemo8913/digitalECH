@@ -52,8 +52,8 @@ input[type="text"]{
 }
 .svgDocument__scale-change_increase,
 .svgDocument__scale-change_decrease{
-    min-height: 25px;
-    min-width: 25px;
+    min-height: 40px;
+    min-width: 40px;
 }
 .infoWindow{
     position: absolute;
