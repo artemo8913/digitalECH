@@ -1,5 +1,3 @@
-let infoWindow = document.getElementById("infoWindow");
-
 /**
  * При наведении мыши на "path" элемент появляется информационное окна с данными о ТР
  * @param {SVGGeometryElement} path 
@@ -12,34 +10,26 @@ let infoWindow = document.getElementById("infoWindow");
  * "Relative Length": number;
  * }}poleRangeData
  * @param {string} location
- * 
- */
-function infoWindowEvent(path, poleRangeData,location) {
-    path.addEventListener("mouseenter", event => {
-        let infoWindow = document.getElementById("infoWindow");
-        infoWindow.hidden = false;
-        infoWindow.style.top = `${event.screenY}px`;
-        infoWindow.style.left = `${event.screenX}px`;
-        // console.log(infoWindow.parentElement.offsetWidth);
-        // console.log(infoWindow.offsetWidth);
-        // console.log(infoWindow.parentElement.offsetTop);
+ *
+ *///.content__info-aside
+function infoWindowEvent(path, poleRangeData, location) {
+    path.addEventListener("click", event => {
+        let infoAsideWindow = document.getElementsByClassName("content__info-aside")[0];
+        infoAsideWindow.hidden = false;
 
-        // let infoWindowText = `Текущий ремонт ${location} оп.№${poleRangeData["Pole start"]}-${poleRangeData["Pole end"]} `;
         let infoWindowText = `Оп.№${poleRangeData["Pole start"]}-${poleRangeData["Pole end"]} `;
         if (poleRangeData["Date maintenance"].toString() === '') {
             infoWindowText += `тек. ремонт не выполнен`;
         }
         else {
-            // infoWindowText += `выполнен ${poleRangeData["Date maintenance"].toLocaleDateString('ru-RU')}`;
             infoWindowText += `- ${poleRangeData["Date maintenance"].toLocaleDateString('ru-RU')}`;
         }
 
-        infoWindow.innerHTML = infoWindowText;
+        infoAsideWindow.innerHTML = infoWindowText;
     });
     path.addEventListener("mouseleave", event => {
-        // console.log(event);
-        let infoWindow = document.getElementById("infoWindow");
-        infoWindow.hidden = true;
+        let infoAsideWindow = document.getElementById("infoAsideWindow");
+        infoAsideWindow.hidden = true;
     });
     return;
 }

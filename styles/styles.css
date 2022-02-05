@@ -55,10 +55,3 @@ input[type="text"]{
     min-height: 40px;
     min-width: 40px;
 }
-.infoWindow{
-    position: absolute;
-    padding: 5px;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 5px;
-}

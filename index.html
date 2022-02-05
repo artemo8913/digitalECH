@@ -17,12 +17,11 @@
     </div>
     <div>
         <form class="load-maintenance-date">
-            <input type="file" accept=".csv" id="maintenanceTableFile">
+            <input type="file" accept=".csv, .xlsx" id="maintenanceTableFile">
             <button type="button" id="btnMaintenanceDataFile">Обработать данные выполненных работ</button>
         </form>
     </div>
     <div class="content">
-        <div class="infoWindow" id="infoWindow" hidden></div>
         <div class="svgDocument__conteiner">
             <object id = "svgDocument__content" data="./assets/schemes/try.svg" type="image/svg+xml"></object>
         </div>
@@ -34,22 +33,29 @@
             <h3 class="content__info-aside-header">Информация о выбранном участке:</h3>
             <div class="content__info-aside-body">
                 <div class="content__info-aside-location">
-                    <h4>Станция/перегон:</h4><h4></h4>
+                    <h4>Станция/перегон:</h4>
                 </div>
                 <div class="content__info-aside-railway-number">
-                    <h4>Номер пути:</h4><h4></h4>
+                    <h4>Номер пути:</h4>
                 </div>
-                <div class="content__info-aside-railway-number">
-                    <h4>Номер пути:</h4><h4></h4>
+                <div class="content__info-aside-railway-poles">
+                    <h4>Перечень опор на участке</h4>
                 </div>
-
+                <div class="content__info-aside-maintenance-pole-range">
+                    <h4>Выбранный диапазон опор</h4>
+                </div>
+                <div class="content__info-aside-maintenance-pole-range">
+                    <h4>Выбранный диапазон опор</h4>
+                </div>
             </div>
         </div>    
     </div>
+    <script src="./node_modules/papaparse/papaparse.js"></script>
+    <script src="./node_modules/xlsx/xlsx.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.2.0/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.min.js"></script>
     <script src="./Scripts/mock/railwaysDataTable.js"></script>
     <script src="./Scripts/mock/maintenanceTable.js"></script>
-    <script src="./node_modules/papaparse/papaparse.js"></script>
     <script src="./Scripts/maintenanceData.js"></script>
     <script src="./Scripts/app.js"></script>
     <script src="./Scripts/svgStaff.js"></script>
