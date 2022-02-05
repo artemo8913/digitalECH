@@ -74,22 +74,11 @@ function processMaintanceData(maintenanceTable, groupedByLocationData) {
             return false;
         }
 
-        //Проверка на пробелы (лучше сделать проверку на символы, которых быть вообще не должно!)
-        if (data["Date maintenance"].split(" ").length > 1) {
-            data["Date maintenance"] = data["Date maintenance"].split(" ").join("");
-            // console.log(data["Date maintenance"]);
-            console.log("Найдена строка с косячным символом (не цифра, не точка). Лишние символы удалены" + JSON.stringify(data));
-        }
-
         //Убираем лишние символы
         if (data["Pole range"].split(" ").length > 1) {
             data["Pole range"] = data["Pole range"].split(" ").join("");
             console.log("Найдена строка с косячным символом (не цифра и не тире) в пролете опор. Лишние символы удалены" + JSON.stringify(data));
         }
-
-        //Меняем дату и месяц местами
-        let dateReverse = data["Date maintenance"].split(".");
-        data["Date maintenance"] = `${dateReverse[1]}.${dateReverse[0]}.${dateReverse[2]}`
 
         if (new Date(data["Date maintenance"]) > new Date()) {
             console.log("Удалена строка с датой текущего ремонта из будущего!" + JSON.stringify(data));

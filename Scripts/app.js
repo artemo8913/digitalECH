@@ -1,5 +1,3 @@
-const btnMaintenanceDataFile = document.getElementById("btnMaintenanceDataFile");
-
 /** @type {HTMLObjectElement} *///@ts-ignore
 const btnScaleIncrease = document.getElementsByClassName("svgDocument__scale-change_increase")[0];
 
@@ -16,20 +14,13 @@ const svgContainer = document.getElementsByClassName("svgDocument__conteiner")[0
 const svgSchemeTitles = svgDoc.getElementsByTagName("title");
 const svgProcessBtn = document.getElementById("svgProcess");
 
-//@ts-ignore
-btnMaintenanceDataFile.onclick = mainProcess;
-// window.addEventListener('load', (event) => {
-//     mainProcess();
-// });
-document.getElementById("maintenanceTableFile").addEventListener("load",()=>{
-
-});
+document.getElementById("maintenanceTableFile").addEventListener('change', mainProcess, false);
 
 function parseRailwaysDataCsv() {
     //@ts-ignore
     // const csvFile = document.getElementById("railwaysDataTableFile").files[0];
     const csvFile = railwaysDataTableStr;
-    const promise = new Promise((resolve) => {
+    const promise = new Promise(resolve => {
         Papa.parse(csvFile, {
             header: true,
             complete: function (results) {
@@ -52,9 +43,17 @@ function parseMaintenanceDataCsv() {
     }));
 }
 
-async function mainProcess() {
+async function parseMaintenanceData(e) {
+    const file = e.target.files[0];
+    const data = await file.arrayBuffer();
+    const workbook = XLSX.read(data,{cellDates:true});
+    return Promise.resolve(XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]));
+}
+
+async function mainProcess(e) {
     let railwaysDataTable = await parseRailwaysDataCsv();
-    let maintenanceTable = await parseMaintenanceDataCsv();
+    let maintenanceTable = await parseMaintenanceData(e);
+    console.log(maintenanceTable);
 
     /** @type {GroupedByLocationData} *///@ts-ignore
     let groupedByLocationData = {};
@@ -95,14 +94,3 @@ async function mainProcess() {
     svgElement.addEventListener("click",event=>console.log(event));
 }
 
-async function handleFileAsync(e) {
-    const file = e.target.files[0];
-    const data = await file.arrayBuffer();
-    const workbook = XLSX.read(data);
-    console.log(workbook);
-    console.log(workbook.SheetNames[0]);
-    console.log(XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]));
-
-    /* DO SOMETHING WITH workbook HERE */
-  }
-  document.getElementById("maintenanceTableFile").addEventListener('change', handleFileAsync, false);
