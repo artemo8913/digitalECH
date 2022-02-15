@@ -40,8 +40,8 @@ function parseRailwaysDataCsv() {
 
 function parseMaintenanceDataCsv() {
     //@ts-ignore
-    const csvFile = document.getElementById("maintenanceTableFile").files[0]; //maintenanceTableStr; // 
-    // const csvFile = maintenanceTableStr;
+    //const csvFile = document.getElementById("maintenanceTableFile").files[0]; //maintenanceTableStr; // 
+    const csvFile = maintenanceTableStr;
     return new Promise(resolve => Papa.parse(csvFile, {
         header: true,
         complete: function (results) {

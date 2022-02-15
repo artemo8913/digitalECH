@@ -45,6 +45,15 @@ input[type="text"]{
     padding: 15px;
     border-radius: 5px;
     min-width: 400px;
+    height: 61vh;
+}
+.content__info-aside *{
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+.content__info-aside-railway-poles p{
+    height: 100px;
+    overflow: auto;
 }
 .svgDocument__scale-change{
     display: flex;
