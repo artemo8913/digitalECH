@@ -75,7 +75,7 @@ async function mainProcess(e) {
     console.log(groupedByLocationData);
     console.log(groupedByDateAndLocationData);
 
-    svgProcessV2(svgSchemeTitles, groupedByDateAndLocationData);
+    svgProcessV2(svgSchemeTitles, groupedByLocationData, groupedByDateAndLocationData);
 
     const maxScale = 1.6;
     const minScale = 0.2;

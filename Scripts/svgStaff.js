@@ -35,9 +35,10 @@ function elementIsPathLocation(innerHTML, groupedByDateAndLocationData) {
  * Заполняет svgPathsData данными применительно к "локации" данные об SVG элементе (path), его атрибута "d",
  * точки построения SVG элемента
  * @param {HTMLCollectionOf<HTMLTitleElement>} svgSchemeTitles
+ * @param {GroupedByLocationData} groupedByLocationData
  * @param {GroupedByDateAndLocationData} groupedByDateAndLocationData
  */
-function svgProcessV2(svgSchemeTitles, groupedByDateAndLocationData) {
+function svgProcessV2(svgSchemeTitles, groupedByLocationData, groupedByDateAndLocationData) {
     Array.from(svgSchemeTitles).forEach(title => {
         if (elementIsPathLocation(title.innerHTML, groupedByDateAndLocationData)) {
             let locationSVG = title.innerHTML;
@@ -53,7 +54,7 @@ function svgProcessV2(svgSchemeTitles, groupedByDateAndLocationData) {
                             dAttribute: pathElement.getAttribute("d"),
                             "Path points": findPathPoints(pathElement)
                         };
-                        svgPathsData[locationSVG] = pathConstructorV2(groupedByDateAndLocationData[locationSVG], svgPathData, groupElement, locationSVG);
+                        svgPathsData[locationSVG] = pathConstructorV2(groupedByLocationData, groupedByDateAndLocationData[locationSVG], svgPathData, groupElement, locationSVG);
                         pathElement.remove();
                     }
                 }
@@ -77,8 +78,9 @@ function svgProcessV2(svgSchemeTitles, groupedByDateAndLocationData) {
  * "Path points":{x:Number,y:Number}[]}} initialSvgPathData
  * @param {Element} groupElement
  * @param {string} location
+ * @param {GroupedByLocationData} groupedByLocationData
  */
-function pathConstructorV2(poleRangesData, initialSvgPathData, groupElement, location) {
+function pathConstructorV2(groupedByLocationData,poleRangesData, initialSvgPathData, groupElement, location) {
     /**
      * Начало path участка. Начало одного участка - конец другого (кроме самого первого участка)
      * @type {{x,y}}
@@ -120,7 +122,7 @@ function pathConstructorV2(poleRangesData, initialSvgPathData, groupElement, loc
         });
         colorLinesV2(poleRangeData, newPath);
         createNewPath(groupElement, newPath);
-        infoWindowEvent(newPath, poleRangeData, location);
+        infoWindowEvent(newPath, groupedByLocationData, poleRangeData, location);
     });
     createMarksOnPath(poleRangesData, newSvgPathsData);
     return newSvgPathsData;
