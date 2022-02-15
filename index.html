@@ -12,7 +12,7 @@
         <img src="./assets/images/Logo.png" alt="Не удалось загрузить логотип" class="header__logo"></td>
         <div class="header__title">
             <h1>Цифровая Красноярская дистанция электроснабжения</h1>
-            <h2>Текуший ремонт контактной сети</h2>    
+            <h2>Текуший ремонт контактной сети</h2>
         </div>
     </div>
     <div>
@@ -20,9 +20,62 @@
             <input type="file" accept=".csv,.xlsx,.xls" id="maintenanceTableFile">
         </form>
     </div>
+    <nav>
+        <ul class="navigation__station-menu">
+            <li>ЭЧК-9
+                <ul class="navigation__station-submenu">
+                    <li>Малиногорка</li>
+                    <li>Козулька</li>
+                    <li>Косачи</li>
+                </ul>
+            </li>
+            <li>ЭЧК-10
+                <ul class="navigation__station-submenu">
+                    <li>Кемчуг</li>
+                    <li>Зеледеево</li>
+                </ul>
+            </li>
+            <li>ЭЧК-12
+                <ul class="navigation__station-submenu">
+                    <li>Кача</li>
+                    <li>Снежница</li>
+                    <li>Минино</li>
+                </ul>
+            </li>
+            <li>ЭЧК-13
+                <ul class="navigation__station-submenu">
+                    <li>Красноярск</li>
+                </ul>
+            </li>
+            <li>ЭЧК-14
+                <ul class="navigation__station-submenu">
+                    <li>Енисей</li>
+                    <li>Красноярские Столбы</li>
+                    <li>Дивногорск</li>
+                </ul>
+            </li>
+            <li>ЭЧК-15
+                <ul class="navigation__station-submenu">
+                    <li>Злобино</li>
+                    <li>Базаиха</li>
+                </ul>
+            </li>
+            <li>ЭЧК-46
+                <ul class="navigation__station-submenu">
+                    <li>Бугач</li>
+                    <li>Красноярск-Северный</li>
+                </ul>
+            </li>
+            <li>ЭЧК-47
+                <ul class="navigation__station-submenu">
+                    <li>Красноярск-Восточный</li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
     <div class="content">
         <div class="svgDocument__conteiner">
-            <object id = "svgDocument__content" data="./assets/schemes/try.svg" type="image/svg+xml"></object>
+            <object id="svgDocument__content" data="./assets/schemes/try.svg" type="image/svg+xml"></object>
         </div>
         <form class="svgDocument__scale-change">
             <button type="button" class="svgDocument__scale-change_increase">+</button>
@@ -47,7 +100,7 @@
                     <h4>Выбранный диапазон опор</h4>
                 </div>
             </div>
-        </div>    
+        </div>
     </div>
     <script src="./node_modules/papaparse/papaparse.js"></script>
     <script src="./node_modules/xlsx/xlsx.js"></script>

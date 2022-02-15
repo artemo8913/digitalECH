@@ -55,3 +55,44 @@ input[type="text"]{
     min-height: 40px;
     min-width: 40px;
 }
+nav ul {
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+ul.navigation__station-menu {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-content: stretch;
+    padding: 0px 150px;
+}
+ul.navigation__station-menu > li {
+    cursor: pointer;
+    padding: 10px;
+}
+ul.navigation__station-submenu{
+    cursor: pointer;
+    position: absolute;
+    min-width: 200px;
+    background: white;
+    border-top: 1px solid #CBCBCC;
+    border-left: 1px solid #CBCBCC;
+    border-right: 1px solid #CBCBCC;
+    visibility: hidden;
+    opacity: 0; 
+    transform-origin: 0% 0%;
+    transform: rotateX(-90deg);
+    transition: .2s linear;
+}
+ul.navigation__station-submenu li {
+    padding: 5px;
+    border-bottom: 1px solid black;
+}
+
+nav li:hover > .navigation__station-submenu {
+  transform: rotateX(0deg);
+  visibility: visible;
+  opacity: 1;
+}

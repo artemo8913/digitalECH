@@ -62,7 +62,6 @@ function svgProcessV2(svgSchemeTitles, groupedByDateAndLocationData) {
         clearSVGToolTip(title);
     });
     console.log(svgPathsData);
-    navigateTo(svgPathsData["Малиногорка1"][0]["path"]);
 }
 /**
  * Формирование новых path элементов. Расчитывает координаты точек новых path

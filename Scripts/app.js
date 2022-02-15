@@ -12,6 +12,13 @@ const svgElement = svgDoc.getElementsByTagName("svg")[0];
 /** @type {HTMLObjectElement} *///@ts-ignore
 const svgContainer = document.getElementsByClassName("svgDocument__conteiner")[0];
 const svgSchemeTitles = svgDoc.getElementsByTagName("title");
+let svgSchemeDesc;
+svgDoc.addEventListener("DOMContentLoaded", () => {
+    svgSchemeDesc = Array.from(svgDoc.getElementsByTagName("desc"))
+        .filter(desc => desc.innerHTML.startsWith("Станция"));
+        navigationInitial(svgSchemeDesc);
+});
+
 const svgProcessBtn = document.getElementById("svgProcess");
 
 document.getElementById("maintenanceTableFile").addEventListener('change', mainProcess, false);
@@ -46,7 +53,7 @@ function parseMaintenanceDataCsv() {
 async function parseMaintenanceData(e) {
     const file = e.target.files[0];
     const data = await file.arrayBuffer();
-    const workbook = XLSX.read(data,{cellDates:true});
+    const workbook = XLSX.read(data, { cellDates: true });
     return Promise.resolve(XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]));
 }
 
@@ -76,21 +83,20 @@ async function mainProcess(e) {
 
     const cameraInfo = {
         currentScale: 1,
-        currentOriginPos: {x: 0, y: 0},
+        currentOriginPos: { x: 0, y: 0 },
     };
 
     btnScaleIncrease.onclick = () => {
         cameraInfo.currentScale = Math.min(maxScale, cameraInfo.currentScale + scaleStep);
-        if(cameraInfo.currentScale<maxScale){
-            changeSvgScale(svgElement, svgContainer, 1+scaleStep);
+        if (cameraInfo.currentScale < maxScale) {
+            changeSvgScale(svgElement, svgContainer, 1 + scaleStep);
         }
     };
     btnScaleDecrease.onclick = () => {
         cameraInfo.currentScale = Math.max(minScale, cameraInfo.currentScale - scaleStep);
-        if(cameraInfo.currentScale>minScale){
-            changeSvgScale(svgElement, svgContainer, 1-scaleStep);
+        if (cameraInfo.currentScale > minScale) {
+            changeSvgScale(svgElement, svgContainer, 1 - scaleStep);
         }
     };
-    svgElement.addEventListener("click",event=>console.log(event));
+    svgElement.addEventListener("click", event => console.log(event));
 }
-
