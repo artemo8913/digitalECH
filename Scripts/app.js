@@ -13,7 +13,7 @@ const svgElement = svgDoc.getElementsByTagName("svg")[0];
 const svgContainer = document.getElementsByClassName("svgDocument__conteiner")[0];
 const svgSchemeTitles = svgDoc.getElementsByTagName("title");
 let svgSchemeDesc;
-svgDoc.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("load", () => {
     svgSchemeDesc = Array.from(svgDoc.getElementsByTagName("desc"))
         .filter(desc => desc.innerHTML.startsWith("Станция"));
         navigationInitial(svgSchemeDesc);
