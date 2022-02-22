@@ -1,4 +1,4 @@
-let maintenanceTableStr = `Location;Railway/waypoint;Railway/waypoint number;Pole range;Date maintenance
+let maintenanceTableStr = `Местоположение;Путь/съезд;Номер пути/съезда;Пролет опор;Дата текущего ремонта
 Малиногорка;Путь;1;1-9;09.04.2020
 Малиногорка;Путь;1;61-69;30.07.2020
 Малиногорка;Путь;2;20-46;18.08.2020

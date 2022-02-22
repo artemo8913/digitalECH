@@ -1,6 +1,6 @@
 /**
  *  Информация о содержащихся в SVG схеме "локаций" (путей станций и перегонов) и соответствующих им тегов path
- * @type {{"Location with way number":{path:SVGGeometryElement,
+ * @type {{"Местоположение с номером пути":{path:SVGGeometryElement,
  * dAttribute:string,
  * "Path points":{x:Number,y:Number}[]}[]}}
  */
@@ -22,8 +22,8 @@ function findPathPoints(pathElement) {
 }
 
 function elementIsPathLocation(innerHTML, groupedByDateAndLocationData) {
-    for (const location in groupedByDateAndLocationData) {
-        if (location == innerHTML) {
+    for (const Местоположение in groupedByDateAndLocationData) {
+        if (Местоположение == innerHTML) {
             return true;
         }
     }
@@ -66,21 +66,21 @@ function svgProcessV2(svgSchemeTitles, groupedByLocationData, groupedByDateAndLo
 }
 /**
  * Формирование новых path элементов. Расчитывает координаты точек новых path
- * @param {{"Pole start": string,
- * "Pole end": string,
- * "Pole range": string,
- * "Date maintenance": Date,
- * "Periodicity":number,
- * "Pole ranges count": Number,
- * "Relative Length": Number}[]} poleRangesData
+ * @param {{"Начало пролета": string,
+ * "Конец пролета": string,
+ * "Пролет опор": string,
+ * "Дата текущего ремонта": Date,
+ * "Периодичность":number,
+ * "Опора ranges count": Number,
+ * "Относительная длина": Number}[]} poleRangesData
  * @param {{path:SVGGeometryElement,
  * dAttribute:string,
  * "Path points":{x:Number,y:Number}[]}} initialSvgPathData
  * @param {Element} groupElement
- * @param {string} location
+ * @param {string} Местоположение
  * @param {GroupedByLocationData} groupedByLocationData
  */
-function pathConstructorV2(groupedByLocationData,poleRangesData, initialSvgPathData, groupElement, location) {
+function pathConstructorV2(groupedByLocationData,poleRangesData, initialSvgPathData, groupElement, Местоположение) {
     /**
      * Начало path участка. Начало одного участка - конец другого (кроме самого первого участка)
      * @type {{x,y}}
@@ -97,7 +97,7 @@ function pathConstructorV2(groupedByLocationData,poleRangesData, initialSvgPathD
     poleRangesData.forEach(poleRangeData => {
         let newPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
         let newPathPoints = [];
-        let partLength = poleRangeData["Relative Length"] * totalLength;
+        let partLength = poleRangeData["Относительная длина"] * totalLength;
         partsLength += partLength;
         endPoint = initialSvgPathData["path"].getPointAtLength(partsLength);
 
@@ -122,7 +122,7 @@ function pathConstructorV2(groupedByLocationData,poleRangesData, initialSvgPathD
         });
         colorLinesV2(poleRangeData, newPath);
         createNewPath(groupElement, newPath);
-        infoWindowEvent(newPath, groupedByLocationData, poleRangeData, location);
+        infoWindowEvent(newPath, groupedByLocationData, poleRangeData, Местоположение);
     });
     createMarksOnPath(poleRangesData, newSvgPathsData);
     return newSvgPathsData;
@@ -144,13 +144,13 @@ function createNewPath(groupElement, newPath) {
 /**
  * Создать и разместить отметки границ пролетов опор (path элементе). Чтобы не захламлять схему множеством налегающих друг
  * на друга символов/отметок, отображаются отметки и подписываются номером только "конечная" опора из диапазона
- * @param {{"Pole start": string,
- * "Pole end": string,
- * "Pole range": string,
- * "Date maintenance": Date,
- * "Periodicity":number,
- * "Pole ranges count": Number,
- * "Relative Length": Number}[]} poleRangesData
+ * @param {{"Начало пролета": string,
+ * "Конец пролета": string,
+ * "Пролет опор": string,
+ * "Дата текущего ремонта": Date,
+ * "Периодичность":number,
+ * "Опора ranges count": Number,
+ * "Относительная длина": Number}[]} poleRangesData
  * @param {Array<{path:SVGGeometryElement,
  * dAttribute:string,
  * "Path points":{x:Number,y:Number}[]}>} svgPathsData
@@ -168,8 +168,8 @@ function createMarksOnPath(poleRangesData, svgPathsData) {
         markPathPoints.push({ x: lastPathPoint.x, y: (lastPathPoint.y + markOffset) });
         markPathPoints.push({ x: lastPathPoint.x, y: (lastPathPoint.y - markOffset) });
 
-        const poleStart = poleRangeData["Pole start"];
-        const poleEnd = poleRangeData["Pole end"];
+        const poleStart = poleRangeData["Начало пролета"];
+        const poleEnd = poleRangeData["Конец пролета"];
 
         const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
         text.setAttribute("class", "poleMarkText");
@@ -208,60 +208,52 @@ function checkSVG() {
 
 }
 /**
- * @param {{"Pole start": string,
- * "Pole end": string,
- * "Pole range": string,
- * "Date maintenance": Date,
- * "Periodicity":number,
- * "Pole ranges count": Number,
- * "Relative Length": Number}} poleRangeData
+ * @param {{"Начало пролета": string,
+ * "Конец пролета": string,
+ * "Пролет опор": string,
+ * "Дата текущего ремонта": Date,
+ * "Периодичность":number,
+ * "Опора ranges count": Number,
+ * "Относительная длина": Number}} poleRangeData
  * @param {SVGPathElement} newPath
  */
 function colorLinesV2(poleRangeData, newPath) {
     let msInYear = 1000 * 60 * 60 * 24 * 365;
-    const lastJobDate = poleRangeData["Date maintenance"];
+    const lastJobDate = poleRangeData["Дата текущего ремонта"];
 
     if (!lastJobDate) {
-        // console.log(1);
         newPath.style.stroke = "#ff0000";
         return;
     }
 
     const jobAge = (new Date().getTime() - lastJobDate.getTime()) / msInYear;
 
-    if (jobAge > poleRangeData["Periodicity"]) {
-        // console.log(2);
+    if (jobAge > poleRangeData["Периодичность"]) {
         newPath.style.stroke = "#ff0000";
     }
     else if (jobAge > 6) {
-        // console.log(3);
         newPath.style.stroke = "#ff0000";
     }
     else if (jobAge > 5) {
-        // console.log(4);
         newPath.style.stroke = "#ae6842";
     }
     else if (jobAge > 4) {
-        // console.log(5);
         newPath.style.stroke = "#4e6d56";
     }
     else if (jobAge > 3) {
-        // console.log(6);
         newPath.style.stroke = "#38fcff";
     }
     else if (jobAge > 2) {
-        // console.log(7);
         newPath.style.stroke = "#ff8700";
     }
     else if (jobAge > 1) {
-        // console.log(8);
         newPath.style.stroke = "#F0FF00";
     }
     else if (jobAge > 0) {
-        // console.log(9);
         newPath.style.stroke = "#00FF00";
     }
 }
+
 
 /**
  * @param {SVGSVGElement} svgElement

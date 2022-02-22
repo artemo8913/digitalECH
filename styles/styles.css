@@ -39,7 +39,7 @@ input[type="text"]{
     border: 2px black solid;
     height: 65vh;
 }
-.content__info-aside{
+.info-aside{
     border: solid black 1px;
     background-color: rgba(255, 255, 255,0.3);
     padding: 15px;
@@ -47,11 +47,17 @@ input[type="text"]{
     min-width: 400px;
     height: 61vh;
 }
-.content__info-aside *{
+.info-aside *{
     margin-top: 0;
     margin-bottom: 20px;
 }
-.content__info-aside-railway-poles p{
+.info-aside__close-btn{
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin: 0 0 0 auto;
+}
+.info-aside-body__text-railway-poles p{
     height: 100px;
     overflow: auto;
 }

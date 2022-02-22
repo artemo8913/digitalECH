@@ -1,4 +1,4 @@
-let railwaysDataTableStr = `ECHK;Location;Railway/waypoint;Railway/waypoint number;Pole;Date maintenance
+let railwaysDataTableStr = `ЭЧК;Местоположение;Путь/съезд;Номер пути/съезда;Опора;Дата текущего ремонта
 9;Малиногорка;Путь;1;1;
 9;Малиногорка;Путь;1;3;
 9;Малиногорка;Путь;1;5;

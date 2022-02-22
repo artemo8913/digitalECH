@@ -23,6 +23,8 @@ const svgProcessBtn = document.getElementById("svgProcess");
 
 document.getElementById("maintenanceTableFile").addEventListener('change', mainProcess, false);
 
+camerControl(svgElement, svgContainer);
+
 function parseRailwaysDataCsv() {
     //@ts-ignore
     // const csvFile = document.getElementById("railwaysDataTableFile").files[0];
@@ -59,6 +61,7 @@ async function parseMaintenanceData(e) {
 
 async function mainProcess(e) {
     let railwaysDataTable = await parseRailwaysDataCsv();
+    console.log(railwaysDataTable);
     let maintenanceTable = await parseMaintenanceData(e);
     console.log(maintenanceTable);
 
@@ -77,6 +80,9 @@ async function mainProcess(e) {
 
     svgProcessV2(svgSchemeTitles, groupedByLocationData, groupedByDateAndLocationData);
 
+}
+
+function camerControl(svgElement, svgContainer){
     const maxScale = 1.6;
     const minScale = 0.2;
     const scaleStep = 0.2;
@@ -95,8 +101,7 @@ async function mainProcess(e) {
     btnScaleDecrease.onclick = () => {
         cameraInfo.currentScale = Math.max(minScale, cameraInfo.currentScale - scaleStep);
         if (cameraInfo.currentScale > minScale) {
-            changeSvgScale(svgElement, svgContainer, 1 - scaleStep);
+            changeSvgScale(svgElement, svgContainer, 1/(1 + scaleStep));
         }
     };
-    svgElement.addEventListener("click", event => console.log(event));
 }
