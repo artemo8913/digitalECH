@@ -7,9 +7,10 @@ const btnScaleDecrease = document.getElementsByClassName("svgDocument__scale-cha
 const svgContainer = document.getElementsByClassName("svgDocument__conteiner")[0];
 console.log(svgContainer);
 /** @type {HTMLObjectElement} *///@ts-ignore
-const obj = document.getElementById("svgDocument__content");
-console.log(obj);
-const svgDoc = obj.contentDocument;
+// const obj = document.getElementById("svgDocument__content");
+// console.log(obj);
+// const svgDoc = obj.contentDocument;
+const svgDoc = document.getElementById("svgDocument__content");
 console.log(svgDoc);
 const svgElement = svgDoc.getElementsByTagName("svg")[0];
 svgDoc.addEventListener("click",(e)=>console.log(e));
