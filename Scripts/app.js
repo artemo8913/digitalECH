@@ -8,10 +8,13 @@ const btnScaleDecrease = document.getElementsByClassName("svgDocument__scale-cha
 const obj = document.getElementById("svgDocument__content");
 const svgDoc = obj.contentDocument;
 const svgElement = svgDoc.getElementsByTagName("svg")[0];
+svgDoc.addEventListener("click",(e)=>console.log(e));
 
 /** @type {HTMLObjectElement} *///@ts-ignore
 const svgContainer = document.getElementsByClassName("svgDocument__conteiner")[0];
+console.log(svgContainer);
 const svgSchemeTitles = svgDoc.getElementsByTagName("title");
+console.log(svgSchemeTitles);
 let svgSchemeDesc;
 window.addEventListener("load", () => {
     svgSchemeDesc = Array.from(svgDoc.getElementsByTagName("desc"))
