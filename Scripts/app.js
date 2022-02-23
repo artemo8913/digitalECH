@@ -3,16 +3,16 @@ const btnScaleIncrease = document.getElementsByClassName("svgDocument__scale-cha
 
 /** @type {HTMLObjectElement} *///@ts-ignore
 const btnScaleDecrease = document.getElementsByClassName("svgDocument__scale-change_decrease")[0];
-
-/** @type {HTMLObjectElement} *///@ts-ignore
-const obj = document.getElementById("svgDocument__content");
-const svgDoc = obj.contentDocument;
-const svgElement = svgDoc.getElementsByTagName("svg")[0];
-svgDoc.addEventListener("click",(e)=>console.log(e));
-
 /** @type {HTMLObjectElement} *///@ts-ignore
 const svgContainer = document.getElementsByClassName("svgDocument__conteiner")[0];
 console.log(svgContainer);
+/** @type {HTMLObjectElement} *///@ts-ignore
+const obj = document.getElementById("svgDocument__content");
+console.log(obj);
+const svgDoc = obj.contentDocument;
+console.log(svgDoc);
+const svgElement = svgDoc.getElementsByTagName("svg")[0];
+svgDoc.addEventListener("click",(e)=>console.log(e));
 const svgSchemeTitles = svgDoc.getElementsByTagName("title");
 console.log(svgSchemeTitles);
 let svgSchemeDesc;
