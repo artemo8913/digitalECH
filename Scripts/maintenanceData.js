@@ -1,10 +1,11 @@
 /**
  * Общие данные по опорам, перегонам контактной сети. Содержат в себе
  * данные о перегонах/станциях, номера принадлежащим им опорам, даты проведения текущего ремонта с привязкой к опорам 
- * @typedef {Array<{"Местоположение":string,
+ * @typedef {Array<{"ЭЧК":string,
+ * "Местоположение":string,
  * "Путь/съезд":string,
  * "Номер пути/съезда":string,
- * "Класс линии":string,
+ * "Класс линии": string,
  * "Периодичность":number,
  * "Опора":string,
  * "Дата текущего ремонта":Date,
@@ -13,7 +14,8 @@
 
 /**
  * Группированные строки таблицы railwaysDataTable по "Местоположение с номером пути"
- * @typedef {{[locationWithWayNumber: string]: Array<{"Пролет опор": string,
+ * @typedef {{[locationWithWayNumber: string]: Array<{"ЭЧК": string,
+ * "Пролет опор": string,
  * "Дата текущего ремонта": Date,
  * "Начало пролета": string,
  * "Конец пролета": string,
@@ -24,6 +26,7 @@
 /**
  * Отгруппированные смежные пролеты опор с одинаковой датой ремонта из массива groupedByLocationData
  * @typedef {{"Местоположение с номером пути":{
+ * "ЭЧК": string,
  * "Начало пролета": string,
  * "Конец пролета": string,
  * "Пролет опор": string,
@@ -37,26 +40,18 @@
  * Данные о выполненном текущем ремонте. Содержат в себе данные о местоположении, и диапазоне опор в которых проводился текущий ремонт
  * Местоположение;Путь/съезд;Номер пути/съезда;Пролет опор;Date
  * @typedef {Array<{
+ * "ЭЧК": string,
  * "Местоположение":string,
  * "Путь/съезд":string,
  * "Номер пути/съезда":string,
  * "Пролет опор":string,
  * "Начало пролета": string,
  * "Конец пролета": string,
- * "Дата текущего ремонта":string,
- * "Местоположение с номером пути":string}>} MaintenanceTable
+ * "Дата текущего ремонта":Date,
+ * "Местоположение с номером пути":string,
+ * "Ошибка":string}>} MaintenanceTable
  */
 
-function filterInPlace(a, condition) {
-    let i = 0, j = 0;
-    while (i < a.length) {
-        const val = a[i];
-        if (condition(val, i, a)) { a[j++] = val; }
-        i++;
-    }
-    a.length = j;
-    return a;
-}
 
 /**
  * Производим операции с данными текущего ремонта
@@ -64,50 +59,40 @@ function filterInPlace(a, condition) {
  * @param {GroupedByLocationData} groupedByLocationData
  */
 function processMaintanceData(maintenanceTable, groupedByLocationData) {
-    console.log(maintenanceTable.length);
+    console.log(maintenanceTable);
     // Валидация данных
-    filterInPlace(maintenanceTable, data => {
-        if (data["Местоположение"] === "") {
-            console.log("Удалена строка с пустым значением локации!" + JSON.stringify(data));
-            return false;
+    maintenanceTable.forEach(data => {
+        data["Ошибка"] = '';
+        if (!data["ЭЧК"] || !data["Местоположение"] || !data["Дата текущего ремонта"] || !data["Пролет опор"] || !data["Путь/съезд"]) {
+            data["Ошибка"] += "Строка с пустым полем; ";
+            document.dispatchEvent(new CustomEvent("findError"));
+            return;
         }
         //Убираем лишние символы
-        if (data["Пролет опор"].split(" ").length > 1) {
-            data["Пролет опор"] = data["Пролет опор"].split(" ").join("");
-            console.log("Найдена строка с косячным символом (не цифра и не тире) в пролете опор. Лишние символы удалены" + JSON.stringify(data));
-            return false;
+        if (!/^\d+[а-я]*-\d+[а-я]*$/gmi.test(data["Пролет опор"])) {
+            data["Ошибка"] += "Неверный символ в пролете опор; ";
+            document.dispatchEvent(new CustomEvent("findError"));
+            return;
         }
         if (!(data["Дата текущего ремонта"] instanceof Date)) {
-            console.log("Ошибка в написании даты " + typeof(data["Дата текущего ремонта"]) + JSON.stringify(data));
-            return false;
+            data["Ошибка"] += "Неверный формат даты; ";
+            document.dispatchEvent(new CustomEvent("findError"));
+            return;
         }
         if (new Date(data["Дата текущего ремонта"]) > new Date()) {
-            console.log("Удалена строка с датой текущего ремонта из будущего!" + JSON.stringify(data));
-            return false;
+            data["Ошибка"] += "Текущий ремонт выполнен в будущем времени; ";
+            document.dispatchEvent(new CustomEvent("findError"));
+            return;
         }
-        return true;
-    });
-    console.log(maintenanceTable.length);
-    maintenanceTable.forEach(data => {
         //Уточняем местоположение опор        
         data["Местоположение с номером пути"] = data["Местоположение"] + data["Номер пути/съезда"];
-
         //Разбиваем диапазон опор в пределах которого проходил текущий ремонт на "начало" и "конец"
         [data["Начало пролета"], data["Конец пролета"]] = data["Пролет опор"].split("-");
-
-        //Проверка на значения начальной и конечных опор
+        //Сортируем порядок опор в пролете опор
         if (parseInt(data["Начало пролета"]) > parseInt(data["Конец пролета"])) {
             [data["Начало пролета"], data["Конец пролета"]] = [data["Конец пролета"], data["Начало пролета"]];
         }
     });
-    // var workbook = XLSX.utils.book_new();
-    // var worksheet = XLSX.utils.json_to_sheet(maintenanceTable);
-    // console.log(worksheet);
-    // const sheet_name = "Ошибки обработки";
-    // XLSX.utils.book_append_sheet(workbook, worksheet, sheet_name);
-    // console.log(workbook);
-    // XLSX.writeFile(workbook, "Ошибочки.xls", { cellDates: true });
-
     joinTables(maintenanceTable, groupedByLocationData);
 }
 
@@ -117,7 +102,7 @@ function processMaintanceData(maintenanceTable, groupedByLocationData) {
  * @param {GroupedByLocationData} groupedByLocationData
  */
 function processRailwaysData(railwaysDataTable, groupedByLocationData) {
-    //Уточняем местоположение опор, сопоставляем указанный класс линии с периодичностью.
+    //Уточняем местоположение опор, сопоставляем указанный класс линии с периодичностью. Будет вынесено в изначальные данные
     railwaysDataTable.forEach(data => {
         data["Местоположение с номером пути"] = data["Местоположение"] + data["Номер пути/съезда"];
         //Устанавливаем периодичность
@@ -136,35 +121,37 @@ function processRailwaysData(railwaysDataTable, groupedByLocationData) {
     // Группируем массив из пролетов опор по "Местоположение с номером пути"
     for (let i = 0; i < (railwaysDataTable.length - 1); i++) {
         if (!groupedByLocationData[railwaysDataTable[i]["Местоположение с номером пути"]]) {
+            let echk = railwaysDataTable[i]["ЭЧК"];
             let poleStart = railwaysDataTable[i]["Опора"];
             let poleEnd = railwaysDataTable[i + 1]["Опора"];
             let poleRange = `${railwaysDataTable[i]["Опора"]}-${railwaysDataTable[i + 1]["Опора"]}`;
             let periodicity = railwaysDataTable[i]["Периодичность"];
-            groupedByLocationData[railwaysDataTable[i]["Местоположение с номером пути"]] = [{ "Пролет опор": poleRange, "Начало пролета": poleStart, "Конец пролета": poleEnd, "Дата текущего ремонта": "", "Периодичность": periodicity }];
+            groupedByLocationData[railwaysDataTable[i]["Местоположение с номером пути"]] = [{"ЭЧК":echk, "Пролет опор": poleRange, "Начало пролета": poleStart, "Конец пролета": poleEnd, "Дата текущего ремонта": "", "Периодичность": periodicity }];
         }
         else {
             if (railwaysDataTable[i]["Местоположение с номером пути"] == railwaysDataTable[i + 1]["Местоположение с номером пути"]) {
+                let echk = railwaysDataTable[i]["ЭЧК"];
                 let poleStart = railwaysDataTable[i]["Опора"];
                 let poleEnd = railwaysDataTable[i + 1]["Опора"];
                 let poleRange = `${railwaysDataTable[i]["Опора"]}-${railwaysDataTable[i + 1]["Опора"]}`;
                 let periodicity = railwaysDataTable[i]["Периодичность"];
-            groupedByLocationData[railwaysDataTable[i]["Местоположение с номером пути"]].push({ "Пролет опор": poleRange, "Начало пролета": poleStart, "Конец пролета": poleEnd, "Дата текущего ремонта": "", "Периодичность": periodicity });
+                groupedByLocationData[railwaysDataTable[i]["Местоположение с номером пути"]].push({"ЭЧК":echk, "Пролет опор": poleRange, "Начало пролета": poleStart, "Конец пролета": poleEnd, "Дата текущего ремонта": "", "Периодичность": periodicity });
             }
         }
     }
 }
 /**
- * Для каждой опоры "Опора" в railwaysDataTable в пределах указанного диапазона указываем дату текущего ремонта
+ * Для каждой опоры в railwaysDataTable в пределах указанного диапазона указываем дату текущего ремонта
  * @param {MaintenanceTable} maintenanceTable 
  * @param {GroupedByLocationData} groupedByLocationData 
  */
 function joinTables(maintenanceTable, groupedByLocationData) {
     maintenanceTable.forEach(maintenancedata => {
-        for (const Местоположение in groupedByLocationData) {
-            if (maintenancedata["Местоположение с номером пути"] == Местоположение) {
+        for (const location in groupedByLocationData) {
+            if (maintenancedata["Местоположение с номером пути"] == location) {
                 let isCompare = false;
-                if (isValidPoleInterval(maintenancedata, groupedByLocationData, Местоположение)) {
-                    for (const sortdata of groupedByLocationData[Местоположение]) {
+                if (isValidPoleInterval(maintenancedata, groupedByLocationData, location)) {
+                    for (const sortdata of groupedByLocationData[location]) {
                         if (maintenancedata["Начало пролета"] === sortdata["Начало пролета"]) {
                             isCompare = true;
                         }
@@ -181,34 +168,37 @@ function joinTables(maintenanceTable, groupedByLocationData) {
 
             }
         }
-    })
+    });
 }
 /**
  * 
  */
-function isValidPoleInterval(maintenancedata, groupedByLocationData, Местоположение) {
+function isValidPoleInterval(maintenancedata, groupedByLocationData, location) {
     let poleStartIsEquel = false;
     let poleEndIsEquel = false;
     const { "Начало пролета": start, "Конец пролета": end } = maintenancedata;
 
-    for (const sortdata of groupedByLocationData[Местоположение]) {
+    if (maintenancedata["Ошибка"]) return false;
+
+    for (const sortdata of groupedByLocationData[location]) {
         if (start === sortdata["Начало пролета"]) {
             poleStartIsEquel = true;
         }
         else if (String(parseInt(start)) === sortdata["Начало пролета"]) {
-            poleStartIsEquel = true;
-            console.log(`В диапазоне опор №${start}-${end} текущего ремонта ${Местоположение} в сутках ${maintenancedata["Дата текущего ремонта"]} содержится номер опоры, которого нет в нормативном журнале! Скорее всего имелся ввиду номер опоры №${sortdata["Начало пролета"]}`);
+            document.dispatchEvent(new CustomEvent("findError"));
+            maintenancedata["Ошибка"] += `№${start} нет в нормативном журнале, но есть №${sortdata["Начало пролета"]}; `;
         }
         if (end === sortdata["Конец пролета"]) {
             poleEndIsEquel = true;
         }
         else if (String(parseInt(end)) === sortdata["Конец пролета"]) {
-            poleEndIsEquel = true;
-            console.log(`В диапазоне опор №${start}-${end} текущего ремонта ${Местоположение} в сутках ${maintenancedata["Дата текущего ремонта"]} содержится номер опоры, которого нет в нормативном журнале! Скорее всего имелся ввиду номер опоры №${sortdata["Конец пролета"]}`);
+            document.dispatchEvent(new CustomEvent("findError"));
+            maintenancedata["Ошибка"] += `№${end} нет в нормативном журнале, но есть №${sortdata["Конец пролета"]}; `;
         }
     }
     if (!(poleStartIsEquel && poleEndIsEquel)) {
-        console.log(`Начало (опора №${start} ${poleStartIsEquel}) или конец (опора №${end} ${poleEndIsEquel}) пролета опор проведенного текущего ремонта ${Местоположение} в сутках ${maintenancedata["Дата текущего ремонта"]} не верны! Так, у ${Местоположение} начало: ${groupedByLocationData[Местоположение][0]["Начало пролета"]} и конец ${groupedByLocationData[Местоположение][groupedByLocationData[Местоположение].length - 1]["Конец пролета"]}`);
+        document.dispatchEvent(new CustomEvent("findError"));
+        maintenancedata["Ошибка"] += `начало (опора №${start} ${poleStartIsEquel}) или конец (опора №${end} ${poleEndIsEquel}) пролета опор не верны! У ${location} начало: ${groupedByLocationData[location][0]["Начало пролета"]} конец: ${groupedByLocationData[location][groupedByLocationData[location].length - 1]["Конец пролета"]}`;
     }
     return (poleStartIsEquel && poleEndIsEquel);
 }
@@ -229,15 +219,15 @@ function groupRailwaysDataByDate(groupedByLocationData) {
     //@ts-ignore
     const groupedByDateAndLocationData = {};
 
-    for (let Местоположение in groupedByLocationData) {
-        let poleRangesData = groupedByLocationData[Местоположение];
-        groupedByDateAndLocationData[Местоположение] = [];
-        for (let i = 0; i < groupedByLocationData[Местоположение].length; i++) {
-            let poleRangeData = groupedByLocationData[Местоположение][i];
+    for (let location in groupedByLocationData) {
+        let poleRangesData = groupedByLocationData[location];
+        groupedByDateAndLocationData[location] = [];
+        for (let i = 0; i < groupedByLocationData[location].length; i++) {
+            let poleRangeData = groupedByLocationData[location][i];
             if (i === 0) {
                 dateIsEqual = false;
                 stack = [];
-                groupedByDateAndLocationData[Местоположение] = [];
+                groupedByDateAndLocationData[location] = [];
                 poleStart = poleRangeData["Начало пролета"];
                 poleEnd = poleRangeData["Конец пролета"];
                 stack.push(poleRangeData);
@@ -250,27 +240,27 @@ function groupRailwaysDataByDate(groupedByLocationData) {
             }
             if (poleRangesData[i - 1]["Дата текущего ремонта"].toString() !== poleRangesData[i]["Дата текущего ремонта"].toString()) {
                 dateIsEqual = false;
-                groupedByDateAndLocationData[Местоположение].push({
+                groupedByDateAndLocationData[location].push({
                     "Начало пролета": poleStart,
                     "Конец пролета": poleEnd,
                     "Пролет опор": `${poleStart}-${poleEnd}`,
                     "Дата текущего ремонта": poleRangesData[i - 1]["Дата текущего ремонта"],
                     "Опора ranges count": stack.length,
-                    "Относительная длина": stack.length / groupedByLocationData[Местоположение].length
+                    "Относительная длина": stack.length / groupedByLocationData[location].length
                 });
                 poleStart = poleRangeData["Начало пролета"];
                 poleEnd = poleRangeData["Конец пролета"];
                 stack = [];
                 stack.push(poleRangeData);
             }
-            if (i === (groupedByLocationData[Местоположение].length - 1)) {
-                groupedByDateAndLocationData[Местоположение].push({
+            if (i === (groupedByLocationData[location].length - 1)) {
+                groupedByDateAndLocationData[location].push({
                     "Начало пролета": poleStart,
                     "Конец пролета": poleEnd,
                     "Пролет опор": `${poleStart}-${poleEnd}`,
                     "Дата текущего ремонта": poleRangesData[i]["Дата текущего ремонта"],
                     "Опора ranges count": stack.length,
-                    "Относительная длина": stack.length / groupedByLocationData[Местоположение].length
+                    "Относительная длина": stack.length / groupedByLocationData[location].length
                 });
             }
         }

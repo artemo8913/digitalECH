@@ -1,32 +1,22 @@
-/** @type {HTMLObjectElement} *///@ts-ignore
-const btnScaleIncrease = document.getElementsByClassName("svgDocument__scale-change_increase")[0];
+let isFindErrors = false;
+document.addEventListener("findError", () => { if (!isFindErrors) isFindErrors = true });
 
 /** @type {HTMLObjectElement} *///@ts-ignore
-const btnScaleDecrease = document.getElementsByClassName("svgDocument__scale-change_decrease")[0];
+const btnScaleIncrease = document.getElementsByClassName("svgDocument__scale-change_increase-btn")[0];
+/** @type {HTMLObjectElement} *///@ts-ignore
+const btnScaleDecrease = document.getElementsByClassName("svgDocument__scale-change_decrease-btn")[0];
 /** @type {HTMLObjectElement} *///@ts-ignore
 const svgContainer = document.getElementsByClassName("svgDocument__conteiner")[0];
-console.log(svgContainer);
-/** @type {HTMLObjectElement} *///@ts-ignore
-// const obj = document.getElementById("svgDocument__content");
-// console.log(obj);
-// const svgDoc = obj.contentDocument;
-const svgDoc = document.getElementById("svgDocument__content");
-console.log(svgDoc);
-const svgElement = svgDoc.getElementsByTagName("svg")[0];
-svgDoc.addEventListener("click",(e)=>console.log(e));
-const svgSchemeTitles = svgDoc.getElementsByTagName("title");
-console.log(svgSchemeTitles);
+const svgElement = document.getElementById("svgDocument__content");
+const svgSchemeTitles = svgElement.getElementsByTagName("title");
 let svgSchemeDesc;
 window.addEventListener("load", () => {
-    svgSchemeDesc = Array.from(svgDoc.getElementsByTagName("desc"))
+    svgSchemeDesc = Array.from(svgElement.getElementsByTagName("desc"))
         .filter(desc => desc.innerHTML.startsWith("Станция"));
-        navigationInitial(svgSchemeDesc);
+    navigationInitial(svgSchemeDesc);
 });
 
-const svgProcessBtn = document.getElementById("svgProcess");
-
 document.getElementById("maintenanceTableFile").addEventListener('change', mainProcess, false);
-
 camerControl(svgElement, svgContainer);
 
 function parseRailwaysDataCsv() {
@@ -68,6 +58,7 @@ async function mainProcess(e) {
     console.log(railwaysDataTable);
     let maintenanceTable = await parseMaintenanceData(e);
     console.log(maintenanceTable);
+    let maintenanceTableError = [];
 
     /** @type {GroupedByLocationData} *///@ts-ignore
     let groupedByLocationData = {};
@@ -84,9 +75,18 @@ async function mainProcess(e) {
 
     svgProcessV2(svgSchemeTitles, groupedByLocationData, groupedByDateAndLocationData);
 
+
+    const loadMaintenanceForm = document.getElementsByClassName("load-maintenance-data")[0];
+    loadMaintenanceForm.hidden = true;
+    if (isFindErrors) {
+        const downloadMaintenanceForm = document.getElementsByClassName("download-maintenance-data")[0];
+        downloadMaintenanceForm.hidden = false;
+        const downloadMaintenanceBtn = document.getElementsByClassName("download-maintenance-data__btn")[0];
+        downloadMaintenanceBtn.addEventListener("click", () => writeErrorLog(maintenanceTable));
+    }
 }
 
-function camerControl(svgElement, svgContainer){
+function camerControl(svgElement, svgContainer) {
     const maxScale = 1.6;
     const minScale = 0.2;
     const scaleStep = 0.2;
@@ -105,7 +105,15 @@ function camerControl(svgElement, svgContainer){
     btnScaleDecrease.onclick = () => {
         cameraInfo.currentScale = Math.max(minScale, cameraInfo.currentScale - scaleStep);
         if (cameraInfo.currentScale > minScale) {
-            changeSvgScale(svgElement, svgContainer, 1/(1 + scaleStep));
+            changeSvgScale(svgElement, svgContainer, 1 / (1 + scaleStep));
         }
     };
+};
+
+function writeErrorLog(maintenanceTable) {
+    var workbook = XLSX.utils.book_new();
+    var worksheet = XLSX.utils.json_to_sheet(maintenanceTable);
+    const sheet_name = "Ошибки обработки";
+    XLSX.utils.book_append_sheet(workbook, worksheet, sheet_name);
+    XLSX.writeFile(workbook, "Ошибочки.xls", { cellDates: true });
 }

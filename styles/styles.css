@@ -21,7 +21,7 @@ body{
     font-family:"Times New Roman";
     border-top: 5px solid black ;
 }
-.load-maintenance-date{
+.load-maintenance-data{
     margin-bottom: 15px;
 }
 input[type="text"]{
@@ -65,8 +65,8 @@ input[type="text"]{
     display: flex;
     flex-direction: column;
 }
-.svgDocument__scale-change_increase,
-.svgDocument__scale-change_decrease{
+.svgDocument__scale-change_increase-btn,
+.svgDocument__scale-change_decrease-btn{
     min-height: 40px;
     min-width: 40px;
 }
