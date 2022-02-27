@@ -32,7 +32,7 @@
  * "Пролет опор": string,
  * "Дата текущего ремонта": Date,
  * "Периодичность":number,
- * "Опора ranges count": Number,
+ * "Длина участка": Number,
  * "Относительная длина": Number}[]}} GroupedByDateAndLocationData
  */
 
@@ -59,7 +59,6 @@
  * @param {GroupedByLocationData} groupedByLocationData
  */
 function processMaintanceData(maintenanceTable, groupedByLocationData) {
-    console.log(maintenanceTable);
     // Валидация данных
     maintenanceTable.forEach(data => {
         data["Ошибка"] = '';
@@ -245,7 +244,7 @@ function groupRailwaysDataByDate(groupedByLocationData) {
                     "Конец пролета": poleEnd,
                     "Пролет опор": `${poleStart}-${poleEnd}`,
                     "Дата текущего ремонта": poleRangesData[i - 1]["Дата текущего ремонта"],
-                    "Опора ranges count": stack.length,
+                    "Длина участка": stack.length,
                     "Относительная длина": stack.length / groupedByLocationData[location].length
                 });
                 poleStart = poleRangeData["Начало пролета"];
@@ -259,7 +258,7 @@ function groupRailwaysDataByDate(groupedByLocationData) {
                     "Конец пролета": poleEnd,
                     "Пролет опор": `${poleStart}-${poleEnd}`,
                     "Дата текущего ремонта": poleRangesData[i]["Дата текущего ремонта"],
-                    "Опора ranges count": stack.length,
+                    "Длина участка": stack.length,
                     "Относительная длина": stack.length / groupedByLocationData[location].length
                 });
             }

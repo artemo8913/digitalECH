@@ -22,8 +22,8 @@ function findPathPoints(pathElement) {
 }
 
 function elementIsPathLocation(innerHTML, groupedByDateAndLocationData) {
-    for (const Местоположение in groupedByDateAndLocationData) {
-        if (Местоположение == innerHTML) {
+    for (const location in groupedByDateAndLocationData) {
+        if (location == innerHTML) {
             return true;
         }
     }
@@ -71,16 +71,16 @@ function svgProcessV2(svgSchemeTitles, groupedByLocationData, groupedByDateAndLo
  * "Пролет опор": string,
  * "Дата текущего ремонта": Date,
  * "Периодичность":number,
- * "Опора ranges count": Number,
+ * "Длина участка": Number,
  * "Относительная длина": Number}[]} poleRangesData
  * @param {{path:SVGGeometryElement,
  * dAttribute:string,
  * "Path points":{x:Number,y:Number}[]}} initialSvgPathData
  * @param {Element} groupElement
- * @param {string} Местоположение
+ * @param {string} location
  * @param {GroupedByLocationData} groupedByLocationData
  */
-function pathConstructorV2(groupedByLocationData,poleRangesData, initialSvgPathData, groupElement, Местоположение) {
+function pathConstructorV2(groupedByLocationData,poleRangesData,initialSvgPathData,groupElement,location) {
     /**
      * Начало path участка. Начало одного участка - конец другого (кроме самого первого участка)
      * @type {{x,y}}
@@ -122,7 +122,7 @@ function pathConstructorV2(groupedByLocationData,poleRangesData, initialSvgPathD
         });
         colorLinesV2(poleRangeData, newPath);
         createNewPath(groupElement, newPath);
-        infoWindowEvent(newPath, groupedByLocationData, poleRangeData, Местоположение);
+        infoWindowEvent(newPath, groupedByLocationData, poleRangeData, location);
     });
     createMarksOnPath(poleRangesData, newSvgPathsData);
     return newSvgPathsData;
@@ -149,41 +149,48 @@ function createNewPath(groupElement, newPath) {
  * "Пролет опор": string,
  * "Дата текущего ремонта": Date,
  * "Периодичность":number,
- * "Опора ranges count": Number,
+ * "Длина участка": Number,
  * "Относительная длина": Number}[]} poleRangesData
  * @param {Array<{path:SVGGeometryElement,
  * dAttribute:string,
  * "Path points":{x:Number,y:Number}[]}>} svgPathsData
  */
 function createMarksOnPath(poleRangesData, svgPathsData) {
+    let lastSvgMarkText;
     poleRangesData.forEach((poleRangeData, index) => {
         const svgOnePathData = svgPathsData[index];
         const pathPoints = svgOnePathData["Path points"];
         const pathElement = svgOnePathData.path;
 
-        const firstPathPoint = pathPoints[0];
         const lastPathPoint = pathPoints[pathPoints.length - 1];
         const markPathPoints = [];
         const markOffset = 5;
         markPathPoints.push({ x: lastPathPoint.x, y: (lastPathPoint.y + markOffset) });
         markPathPoints.push({ x: lastPathPoint.x, y: (lastPathPoint.y - markOffset) });
 
-        const poleStart = poleRangeData["Начало пролета"];
         const poleEnd = poleRangeData["Конец пролета"];
 
-        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        text.setAttribute("class", "poleMarkText");
-        text.setAttribute("x", lastPathPoint.x.toString());
-        text.setAttribute("y", (lastPathPoint.y - markOffset).toString());
-        text.innerHTML = poleEnd;
+        const svgMarkText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        svgMarkText.setAttribute("class", "poleMarkText");
+        svgMarkText.setAttribute("x", lastPathPoint.x.toString());
+        svgMarkText.setAttribute("y", (lastPathPoint.y - markOffset).toString());
+        svgMarkText.innerHTML = poleEnd;
 
         const svgMark = document.createElementNS("http://www.w3.org/2000/svg", "path");
         svgMark.setAttribute("class", "poleSvgMark");
         svgMark.setAttribute("d", dAttributeConstructor(markPathPoints));
-
-        pathElement.parentElement.appendChild(text);
+        svgMark.setAttribute("transform",`rotate(${findPathAngle(svgOnePathData)} ${lastPathPoint.x} ${lastPathPoint.y})`);
+       
+        if(index===0){
+            lastSvgMarkText = svgMarkText; 
+        }
+        else if(lastSvgMarkText.getBBox().width < (Number(svgMarkText.getAttribute("x")) - Number(lastSvgMarkText.getAttribute("x")))){
+            lastSvgMarkText = svgMarkText; 
+        }
+        else svgMarkText.setAttribute("visibility","hidden");
+        
+        pathElement.parentElement.appendChild(svgMarkText);
         pathElement.parentElement.appendChild(svgMark);
-
     })
 
 }
@@ -213,7 +220,7 @@ function checkSVG() {
  * "Пролет опор": string,
  * "Дата текущего ремонта": Date,
  * "Периодичность":number,
- * "Опора ranges count": Number,
+ * "Длина участка": Number,
  * "Относительная длина": Number}} poleRangeData
  * @param {SVGPathElement} newPath
  */
@@ -266,4 +273,18 @@ function changeSvgScale(svgElement, svgContainer, scale) {
     svgElement.setAttribute("width", svgWidth.toString());
     svgContainer.scrollTop *= scale;
     svgContainer.scrollLeft *= scale;
+}
+/**
+ * Находит угол наклона svg path элемента
+ * @param {{path:SVGGeometryElement,
+ * dAttribute:string,
+ * "Path points":{x:Number,y:Number}[]}} svgPathData 
+ */
+function findPathAngle(svgPathData){
+    const lastPoint = svgPathData["Path points"][svgPathData["Path points"].length - 1];
+    const beforeLastPont = svgPathData["Path points"][svgPathData["Path points"].length - 2];
+    const arcToDegree = Math.PI / 180;
+    const length = Math.sqrt((lastPoint.x - beforeLastPont.x)**2 + (lastPoint.y - beforeLastPont.y)**2);
+    const angle = Math.asin( (lastPoint.y - beforeLastPont.y) / length);
+    return angle / arcToDegree;
 }

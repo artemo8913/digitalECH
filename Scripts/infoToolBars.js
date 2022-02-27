@@ -15,11 +15,11 @@ const infoDate = document.getElementsByClassName("info-aside-body__text-maintena
 * "Пролет опор": string,
 * "Дата текущего ремонта": Date,
 * "Периодичность":number,
-* "Опора ranges count": Number,
+* "Длина участка": Number,
 * "Относительная длина": Number}} poleRangeData
-* @param {string} Местоположение 
+* @param {string} location 
 */
-function infoWindowEvent(path, groupedByLocationData, poleRangeData, Местоположение) {
+function infoWindowEvent(path, groupedByLocationData, poleRangeData, location) {
     /**
      * @type {{
      * locationText:string,
@@ -30,10 +30,10 @@ function infoWindowEvent(path, groupedByLocationData, poleRangeData, Место�
     const maintenanceInfo = {};
     path.addEventListener("click", event => {
         infoAsideWindow.hidden = false;
-        maintenanceInfo.locationText = Местоположение;
+        maintenanceInfo.locationText = location;
         maintenanceInfo.dateText = `${poleRangeData["Дата текущего ремонта"]}`;
         maintenanceInfo.poleRangeText = `Оп.№${poleRangeData["Начало пролета"]}-${poleRangeData["Конец пролета"]} `;
-        maintenanceInfo.polesText = groupedByLocationData[Местоположение].map((poleRangeData,index) => {
+        maintenanceInfo.polesText = groupedByLocationData[location].map((poleRangeData,index) => {
             if(index === 0){
                 return poleRangeData["Начало пролета"] +", " + poleRangeData["Конец пролета"];
             }
