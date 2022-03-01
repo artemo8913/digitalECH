@@ -147,6 +147,8 @@ function processRailwaysData(railwaysDataTable, groupedByLocationData) {
 function joinTables(maintenanceTable, groupedByLocationData) {
     maintenanceTable.forEach(maintenancedata => {
         for (const location in groupedByLocationData) {
+            if(!(maintenancedata["Местоположение с номером пути"] in groupedByLocationData)) maintenancedata["Ошибка"] = "Неверное местоположение";
+            
             if (maintenancedata["Местоположение с номером пути"] == location) {
                 let isCompare = false;
                 if (isValidPoleInterval(maintenancedata, groupedByLocationData, location)) {
@@ -164,7 +166,6 @@ function joinTables(maintenanceTable, groupedByLocationData) {
                         }
                     }
                 }
-
             }
         }
     });

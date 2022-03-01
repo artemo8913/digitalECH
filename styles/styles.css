@@ -121,10 +121,10 @@ nav li:hover > .navigation__station-submenu {
 	transition: 0.2s;
 }
 
-.pathStyle:hover {
+.groupPathStyle:hover .pathStyle {
 	cursor: pointer;
-    stroke-linecap: round;
-    stroke-width: 6;
+    stroke-linecap: butt;
+    stroke-width: 7;
 }
 
 .poleMarkText {

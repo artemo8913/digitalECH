@@ -43,6 +43,7 @@ function svgProcessV2(svgSchemeTitles, groupedByLocationData, groupedByDateAndLo
         if (elementIsPathLocation(title.innerHTML, groupedByDateAndLocationData)) {
             let locationSVG = title.innerHTML;
             let groupElement = title.parentElement;
+            groupElement.setAttribute("class", "groupPathStyle");
             svgPathsData[locationSVG] = [];
             Array.from(groupElement.children).forEach(
                 /** @param {SVGGeometryElement} pathElement */
