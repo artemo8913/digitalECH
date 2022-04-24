@@ -5,8 +5,8 @@
   },
   "dependencies": {
     "@types/papaparse": "5.2.0",
-    "papaparse": "^5.3.1",
     "@types/xlsx": "0.0.36",
-    "xlsx": "^0.18.0"
+    "papaparse": "^5.3.1",
+    "xlsx": "0.18.0"
   }
 }
